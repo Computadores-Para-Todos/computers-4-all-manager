@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - dev
+
+name: GitHub Action for Heroku - Dev to Stagging
+jobs:
+  deploy_api:
+    name: Deploy Api
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Push to Heroku remote
+        id: build-image
+        env:
+          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
+          HEROKU_APP_NAME: "computers-4-all-staging"
+        run: |
+          #if: github.ref == 'refs/heads/dev' && job.status == 'success'
+          git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
