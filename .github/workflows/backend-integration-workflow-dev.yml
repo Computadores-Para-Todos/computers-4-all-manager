@@ -1,7 +1,7 @@
-on:
-  push:
-    branches:
-      - dev
+on: push
+#  push:
+#    branches:
+#      - dev
 
 name: GitHub Action for Heroku - Dev to Stagging
 jobs:
