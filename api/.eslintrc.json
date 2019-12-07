@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "prettier",
+    "plugin:jsdoc/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "jsdoc"
+  ],
+  "env": {
+    "amd": true,
+    "jest": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error"
+    ],
+    "valid-jsdoc": 2,
+    "valid-typeof": [
+      2,
+      {
+        "requireStringLiterals": false
+      }
+    ],
+    "jsdoc/newline-after-description": 0
+  }
+}
