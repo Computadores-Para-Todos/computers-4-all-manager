@@ -20,4 +20,5 @@ jobs:
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
           #if: github.ref == 'refs/heads/dev' && job.status == 'success'
+          heroku git:remote -a $HEROKU_APP_NAME
           git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
