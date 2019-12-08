@@ -22,8 +22,8 @@ if (process.env.ROLLBAR_TOKEN) {
   // throw new Error("Test error");
 }
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require('./src/routes/index');
+const usersRouter = require('./src/routes/users');
 
 const app = express();
 
