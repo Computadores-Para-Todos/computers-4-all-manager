@@ -1,3 +1,6 @@
 node_modules/
-src/
+src/config/
+src/controllers/
+src/middlewares/
+src/models/
 .env
