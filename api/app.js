@@ -22,11 +22,6 @@ if (process.env.ROLLBAR_TOKEN) {
   // throw new Error("Test error");
 }
 
-// Teste de ESLing + Codacy
-function testeCodacy(a, b) {
-          return a + b;
-}
-
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
