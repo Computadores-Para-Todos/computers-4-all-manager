@@ -35,6 +35,10 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_API_TOKEN
           " >> .netrc
+          echo "teste
+          teste
+          " >> .teste
+          cat .teste
           heroku login
           echo $HEROKU_APP_NAME
           pwd
