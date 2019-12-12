@@ -28,15 +28,16 @@ jobs:
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
           #if: github.ref == 'refs/heads/dev' && job.status == 'success'
-          cat >~/.netrc <<EOF
-          machine api.heroku.com
+          echo "machine api.heroku.com
               login $HEROKU_EMAIL
               password $HEROKU_API_TOKEN
           machine git.heroku.com
               login $HEROKU_EMAIL
               password $HEROKU_API_TOKEN
-          EOF
+          " >> .netrc
           heroku login
+          echo $HEROKU_APP_NAME
+          pwd
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
 
