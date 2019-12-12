@@ -1,10 +1,13 @@
 module.exports = {
-  dialect: 'mysql',
+  dialect: 'mariadb',
+  dialectOptions: {
+    timezone: 'Etc/GMT+3'
+  },
   host: '127.0.0.1',
-  username: 'docker',
-  password: 'docker',
-  database: 'pc4all',
-  operatorsAliases: false,
+  username: 'root',
+  password: 'pc4all',
+  database: 'computer4all',
+  operatorsAliases: 0,
   define: {
     timestamp: true,
     underscored: true,
