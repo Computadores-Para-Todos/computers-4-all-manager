@@ -14,7 +14,8 @@
     "amd": true,
     "jest": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "browser": true
   },
   "parserOptions": {
     "ecmaVersion": 2017,
