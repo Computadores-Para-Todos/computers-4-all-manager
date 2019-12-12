@@ -13,10 +13,13 @@
   "env": {
     "amd": true,
     "jest": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
   "rules": {
     "prettier/prettier": [
