@@ -8,7 +8,7 @@ const rollbar = require('./logger');
 
 // Validar dotenv
 if (dotenv.error) {
-  throw result.error;
+  throw dotenv.error;
 }
 // Validar arquivo .env
 if (!process.env.ADMIN_EMAIL) {
