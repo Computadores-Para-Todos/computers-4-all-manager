@@ -133,6 +133,7 @@ function checkValidServiceWorker(swUrl, config) {
 }
 /**
  * Unregister service worker
+ * @returns {void}
  */
 export function unregister() {
   if ('serviceWorker' in navigator) {
