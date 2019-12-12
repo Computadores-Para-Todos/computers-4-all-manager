@@ -3,7 +3,7 @@ on: push
 #    branches:
 #      - dev
 
-name: GitHub Action for Heroku - Dev to Stagging
+name: Deploy to Heroku - Dev to Stagging
 jobs:
   deploy_api:
     name: Deploy Api
@@ -28,5 +28,6 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_API_TOKEN
           EOF
+          heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
