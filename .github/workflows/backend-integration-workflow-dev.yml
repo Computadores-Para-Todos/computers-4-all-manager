@@ -28,18 +28,7 @@ jobs:
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
           #if: github.ref == 'refs/heads/dev' && job.status == 'success'
-          echo "machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_TOKEN
-          machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_TOKEN
-          " >> .netrc
-          echo "teste
-          teste
-          " >> .teste
-          cat .teste
-          heroku login
+          heroku login --login $HEROKU_EMAIL --password mypassword
           echo $HEROKU_APP_NAME
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
