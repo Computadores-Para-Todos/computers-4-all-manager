@@ -13,13 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Build frontend
-        run: |
-          cd pwa
-          npm install
-          npm run build
-          mkdir ../api/public
-          mv build/* ../api/public
+#      - name: Build frontend
+#        run: |
+#          cd pwa
+#          npm install
+#          npm run build
+#          mkdir ../api/public
+#          mv build/* ../api/public
 
       - name: Push to Heroku remote
         id: build-image
@@ -41,7 +41,6 @@ jobs:
           cat .teste
           heroku login
           echo $HEROKU_APP_NAME
-          pwd
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
 
