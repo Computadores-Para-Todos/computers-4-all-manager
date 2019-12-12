@@ -18,6 +18,7 @@ jobs:
           cd pwa
           npm install
           npm run build
+          mkdir ../api/public
           mv build/* ../api/public
 
       - name: Push to Heroku remote
@@ -38,6 +39,6 @@ jobs:
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
-          
+
           #git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
           #git subtree push --prefix api heroku master
