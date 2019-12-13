@@ -13,10 +13,14 @@
   "env": {
     "amd": true,
     "jest": true,
-    "es6": true
+    "es6": true,
+    "node": true,
+    "browser": true
   },
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
   "rules": {
     "prettier/prettier": [
@@ -30,5 +34,10 @@
       }
     ],
     "jsdoc/newline-after-description": 0
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

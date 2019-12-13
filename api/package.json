@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "lint": "eslint ."
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -17,9 +18,8 @@
     "mariadb": "^2.1.4",
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
-    "mysql2": "^2.0.2",
     "rollbar": "^2.14.4",
-    "sequelize": "^5.21.2"
+    "nodemon": "^2.0.1"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
@@ -27,8 +27,12 @@
     "eslint-plugin-jsdoc": "^18.3.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "3.0.1",
-    "nodemon": "^2.0.1",
-    "prettier": "^1.19.1",
-    "sequelize-cli": "^5.5.1"
+    "husky": "^3.1.0",
+    "prettier": "^1.19.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
   }
 }

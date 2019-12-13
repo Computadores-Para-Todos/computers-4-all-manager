@@ -7,9 +7,9 @@ const logger = require('morgan');
 const rollbar = require('./logger');
 
 // Validar dotenv
-if (dotenv.error) {
-  throw result.error;
-}
+// if (dotenv.error) {
+//   throw dotenv.error;
+// }
 // Validar arquivo .env
 if (!process.env.ADMIN_EMAIL) {
   throw new Error('O arquivo .env não foi carregado corretamente');

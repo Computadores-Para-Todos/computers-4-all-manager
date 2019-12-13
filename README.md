@@ -65,28 +65,32 @@ npm start
 
 Agora seu terminal irá iniciar o servidor local para o react e abrir o navegador com algum conteúdo inicial.
 
-# Outras informações
+# Mais informações e ferramentas
+
+## Lint
+
+O projeto tem um padrão de códigos que é imposto pelo ESLint, é preciso ativar o ESLint e o Pretier na sua IDE para que ela te avise quando algo estiver faltando ou fora do padrão. Todos alertas devem ser resolvidos, porque o Husky não irá deixar subir código fora do padrão.
+
+Estas são as regras em uso:
+
+#### ESLint backend
+- [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc)
+- [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node)
+
+#### ESLint frontend
+- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+
+#### JSDoc
+O ESLint irá pedir que use comentários em vários lugares, seguindo o padrão [JSDoc](https://devhints.io/jsdoc), pedindo para informar os tipos de parâmetros, retornos, etc.
 
 ## dotenv
 
 O projeto utiliza o [dotenv](https://www.npmjs.com/package/dotenv) para carregar os arquivos de configurações (.env) em cada um dos projetos.
 
-## Lint
-
-O projeto tem um padrão de códigos que é imposto pelo ESLint, é preciso ativar o ESLint e o Pretier na sua IDE para que ela te avise quando algo estiver faltando ou fora do padrão. Todos alertas devem ser resolvidos antes de abrir o Pull Request.
-
-Estas são as regras em uso:
-
-### ESLint backend
-- [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc)
-- [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node)
-
-### ESLint frontend
-- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
-
-### JSDoc
-O ESLint irá pedir que use comentários em vários lugares, seguindo o padrão [JSDoc](https://devhints.io/jsdoc), pedindo para informar os tipos de parâmetros, retornos, etc.
-
 ## Rollbar
 
 Os erros do projeto (em produção) serão logados no [Rollbar](https://rollbar.com/), que é uma ferramenta bem útil. Não é obrigado utilizar em desenvolvimento.
+
+## Husky
+
+O [Husky](https://github.com/typicode/husky) irá validar todas as regras do ESLint antes de cada commit, e só deixará subir códigos que estejam 100% dentro das regras definidas.
