@@ -24,6 +24,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set('view engine', 'html');
 
 // Require routes
 const indexRouter = require('./routes/index');
