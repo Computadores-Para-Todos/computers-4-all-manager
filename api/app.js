@@ -6,10 +6,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const rollbar = require('./logger');
 
-// Validar dotenv
-// if (dotenv.error) {
-//   throw dotenv.error;
-// }
 // Validar arquivo .env
 if (!process.env.ADMIN_EMAIL) {
   throw new Error('O arquivo .env não foi carregado corretamente');
@@ -22,19 +18,22 @@ if (process.env.ROLLBAR_TOKEN) {
   // throw new Error("Test error");
 }
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
+// Setup express
 const app = express();
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Require routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+
+// Declare routes
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
+// The server index should be the frontend static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
