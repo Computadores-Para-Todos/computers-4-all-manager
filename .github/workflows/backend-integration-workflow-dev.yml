@@ -30,11 +30,11 @@ jobs:
         run: |
           echo "
           machine api.heroku.com
-              login ${{HEROKU_EMAIL}}
-              password ${{HEROKU_API_TOKEN}}
+              login $HEROKU_EMAIL
+              password $HEROKU_API_TOKEN
           machine git.heroku.com
-              login ${{HEROKU_EMAIL}}
-              password ${{HEROKU_API_TOKEN}}
+              login $HEROKU_EMAIL
+              password $HEROKU_API_TOKEN
           " > $HOME/.netrc
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
