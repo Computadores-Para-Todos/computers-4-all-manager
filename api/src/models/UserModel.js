@@ -1,7 +1,7 @@
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define('Users', {
+  const User = sequelize.define('User', {
     thumb: DataTypes.STRING,
     name: DataTypes.STRING,
     lastname: DataTypes.STRING,
@@ -10,14 +10,31 @@ module.exports = (sequelize, DataTypes) => {
     birthday: DataTypes.DATEONLY,
     phone: DataTypes.STRING,
     cell: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      set(val) {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(val, salt);
+        this.setDataValue('password', hash);
+      }
+    },
     // registragion: DataTypes.DATE,
     // lastupdate: DataTypes.DATE,
     lastaccess: DataTypes.DATE,
     role: DataTypes.INTEGER,
     blocking_reason: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'active'
+    }
     // },
     // {
     //   hooks: {
@@ -30,5 +47,5 @@ module.exports = (sequelize, DataTypes) => {
     // }
   });
 
-  return Users;
+  return User;
 };
