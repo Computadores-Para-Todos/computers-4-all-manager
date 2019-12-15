@@ -39,8 +39,14 @@ jobs:
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
-          pwd
-          ls
+          echo "
+          machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+          machine git.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_KEY
+          " > $HOME/.netrc
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
