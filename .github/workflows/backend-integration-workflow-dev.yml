@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: public
-          path: /api/public
+          path: ./api/public
 
       - name: Push to Heroku remote
         id: build-image
