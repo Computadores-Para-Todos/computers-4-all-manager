@@ -42,7 +42,8 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_API_TOKEN
           " > $HOME/.netrc
-          ls /api/
+          pwd
+          ls
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
