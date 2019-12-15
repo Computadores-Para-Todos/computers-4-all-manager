@@ -15,12 +15,16 @@ jobs:
 
       - name: Build frontend
         run: |
+          ls api
           cd pwa
           npm install
           npm run build
           mkdir -p ../api/public
           mv build/* ../api/public
           cd ..
+          pwd
+          ls
+          ls api
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
