@@ -26,27 +26,17 @@ jobs:
           npm run build
           mkdir -p ../api/public
           mv build/* ../api/public
+          cd ..
 
       - name: Push to Heroku remote
         id: build-image
         env:
-          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
-          echo "
-          machine api.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_TOKEN
-          machine git.heroku.com
-              login $HEROKU_EMAIL
-              password $HEROKU_API_TOKEN
-          " > $HOME/.netrc
           pwd
           ls
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
-
-          #git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
-          #git subtree push --prefix api heroku master
