@@ -13,12 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Cache frontend
-        uses: actions/cache@v1
-        with:
-          path: /api/public
-          key: public
-
       - name: Build frontend
         run: |
           cd pwa
@@ -27,6 +21,12 @@ jobs:
           mkdir -p ../api/public
           mv build/* ../api/public
           cd ..
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+          with:
+            name: public
+            path: /api/public
 
       - name: Push to Heroku remote
         id: build-image
