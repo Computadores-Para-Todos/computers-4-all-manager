@@ -22,8 +22,7 @@ class UserController {
 
     const usersUpdated = await User.update(req.body, { where: { id } });
 
-    if (usersUpdated[0] === 0)
-      return res.status(404).json({ error: 'Usuário não localizado' });
+    if (usersUpdated[0] === 0) return res.status(404).json({ error: 'Usuário não localizado' });
 
     res.json(usersUpdated);
   }
@@ -33,8 +32,7 @@ class UserController {
 
     const user = await User.findOne({ where: { id } });
 
-    if (user === null) 
-      return res.status(404).json({ error: 'Usuário não localizado' });
+    if (user === null) return res.status(404).json({ error: 'Usuário não localizado' });
 
     res.json(user);
   }
