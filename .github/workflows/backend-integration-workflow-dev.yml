@@ -24,9 +24,9 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1
-          with:
-            name: public
-            path: /api/public
+        with:
+          name: public
+          path: /api/public
 
       - name: Push to Heroku remote
         id: build-image
