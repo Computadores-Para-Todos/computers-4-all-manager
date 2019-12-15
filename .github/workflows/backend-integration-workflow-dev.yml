@@ -13,12 +13,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Cache frontend
+          id: cache-frontend
+          uses: actions/cache@v1
+          with:
+            path: /api/public
+            key: public
+
       - name: Build frontend
         run: |
           cd pwa
           npm install
           npm run build
-          mkdir ../api/public
+          mkdir -p ../api/public
           mv build/* ../api/public
 
       - name: Push to Heroku remote
@@ -36,6 +43,7 @@ jobs:
               login $HEROKU_EMAIL
               password $HEROKU_API_TOKEN
           " > $HOME/.netrc
+          ls /api/
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
