@@ -13,7 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Build frontend
+      - name: Build frontend, push all to heroku
+        env:
+          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+          HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
           ls api
           cd pwa
@@ -22,23 +26,6 @@ jobs:
           mkdir -p ../api/public
           mv build/* ../api/public
           cd ..
-          pwd
-          ls
-          ls api
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: public
-          path: ./api/public
-
-      - name: Push to Heroku remote
-        id: build-image
-        env:
-          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-          HEROKU_APP_NAME: "computers-4-all-staging"
-        run: |
           echo "
           machine api.heroku.com
               login $HEROKU_EMAIL
@@ -50,3 +37,5 @@ jobs:
           heroku login
           heroku git:remote -a $HEROKU_APP_NAME
           git subtree push --prefix api heroku master
+
+
