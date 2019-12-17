@@ -19,7 +19,15 @@ function App() {
     }
   });
 
-  return <Autenticacao />;
+  const callbackOk = () => {
+    console.log('status: 200');
+  };
+  const callbackNotOk = () => {
+    console.log('status: 400');
+  };
+  const apiUrl = 'https://api.pc4all.com';
+
+  return <Autenticacao apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />;
 }
 
 export default App;

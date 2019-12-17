@@ -1,47 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Segment, Header, Form, Button, Message } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-const view = props => (
-  <Container style={styles.container}>
-    <Segment style={styles.segment}>
-      <Header style={styles.header}>PC4All - Manager</Header>
-      <Form>
-        <Form.Group widths="equal">
-          <Form.Input type="email" fluid label="Email" placeholder="exemplo@exemplo.com" required />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Input type="password" fluid label="Senha" placeholder="******" minLength="6" required />
-        </Form.Group>
-        <Form.Group style={styles.areaBotoes} widths="equal">
-          <Button onClick={() => console.log(props)}>{`Criar Conta`}</Button>
-          <Button onClick={() => console.log(props)}>{`Entrar Agora`}</Button>
-        </Form.Group>
-      </Form>
-    </Segment>
-    {props.erro ? (
-      <Message
-        style={styles.message}
-        negative
-        onDismiss={() => alert('não pode ser fechado')}
-        header="Ocorreu um erro!"
-        content="Os dados estão incorretos!"
-      />
-    ) : null}
-    {props.sucesso ? (
-      <Message
-        style={styles.message}
-        positive
-        onDismiss={() => alert('não pode ser fechado')}
-        header="Bem vindo!"
-        content="Você será redirecionado para o dashboard em instantes..."
-      />
-    ) : null}
-  </Container>
-);
 
-view.propTypes = {
-  erro: PropTypes.bool,
-  sucesso: PropTypes.bool
+const View = props => {
+  const [sucesso, setSucesso] = useState(false);
+  const [erro, setErro] = useState(false);
+  const [tentativa, setTentativa] = useState(false);
+
+  //função para realizar autenticação do usuário
+  const auth = props => {
+    if (tentativa) {
+      setErro(false);
+      setSucesso(!sucesso);
+      //chamada da api aqui com retorno para a funcao de callback de sucesso
+      props.callbackOk();
+    } else {
+      setSucesso(false);
+      setErro(!erro);
+      //chamada da api aqui com retorno para a funcao de callback de erro
+      props.callbackNotOk();
+    }
+    setTentativa(!tentativa);
+  };
+
+  return (
+    <Container style={styles.container}>
+      <Segment style={styles.segment}>
+        <Header style={styles.header}>PC4All - Manager</Header>
+        <Form onSubmit={() => auth(props)}>
+          <Form.Group widths="equal">
+            <Form.Input type="email" fluid label="Email" placeholder="exemplo@exemplo.com" required />
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Input type="password" fluid label="Senha" placeholder="******" minLength="6" required />
+          </Form.Group>
+          <Form.Group style={styles.areaBotoes} widths="equal">
+            <Button color={'blue'}>{`Criar Conta`}</Button>
+            <Button color={'green'} animated={'fade'}>
+              <Button.Content visible>Já tenho Conta</Button.Content>
+              <Button.Content hidden>Entrar Agora</Button.Content>
+            </Button>
+          </Form.Group>
+        </Form>
+      </Segment>
+      {erro ? (
+        <Message
+          style={styles.message}
+          negative
+          onDismiss={() => alert('não pode ser fechado')}
+          header="Ocorreu um erro!"
+          content="Os dados estão incorretos!"
+        />
+      ) : null}
+      {sucesso ? (
+        <Message
+          style={styles.message}
+          positive
+          onDismiss={() => alert('não pode ser fechado')}
+          header="Bem vindo!"
+          content="Você será redirecionado para o dashboard em instantes..."
+        />
+      ) : null}
+    </Container>
+  );
+};
+
+View.propTypes = {
+  callbackOk: PropTypes.func,
+  callbackNotOk: PropTypes.func
 };
 
 const styles = {
@@ -49,17 +75,19 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: '100vh'
   },
   segment: {
-    marginTop: '5%',
     display: 'flex',
     flexDirection: 'column',
-    width: '80%'
+    width: '50%'
   },
   header: {
     textAlign: 'center',
-    marginBottom: '5%'
+    fontSize: '24px',
+    marginBottom: '10%',
+    marginTop: '5%'
   },
   areaBotoes: {
     marginTop: '5%',
@@ -70,8 +98,8 @@ const styles = {
   },
   message: {
     position: 'absolute',
-    top: '70%'
+    top: '3%'
   }
 };
 
-export default view;
+export default View;
