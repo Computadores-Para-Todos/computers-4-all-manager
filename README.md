@@ -60,10 +60,16 @@ cp .env-sample .env
 nvm use
 npm start
 ```
+4 - Rodar o Storybook
+```
+npm run storybook
+```
 
 🎉🎉🎉
 
-Agora seu terminal irá iniciar o servidor local para o react e abrir o navegador com algum conteúdo inicial.
+Agora seu terminal irá iniciar o servidor local e abrir duas abas no navegador: 
+- Uma com a aplicação em React (porta 3000 por padrão)
+- Outra com o Storybook (porta 9009 por padrão)
 
 # Mais informações e ferramentas
 
