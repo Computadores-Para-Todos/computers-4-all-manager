@@ -19,6 +19,7 @@ jobs:
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
+          rm .gitignore
           ls api
           cd pwa
           npm install
