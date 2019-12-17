@@ -11,9 +11,11 @@ if (dotenv.error) {
   throw dotenv.error;
 }
 
+const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
+
 // Validar arquivo .env
-if (!process.env.ADMIN_EMAIL) {
-  throw new Error('O arquivo .env não foi carregado corretamente');
+if (!ADMIN_EMAIL || !DB_HOST || !DB_USERNAME || !DATABASE) {
+  throw new Error('O arquivo .env não foi carregado corretamente. Leia o README para mais informações.');
 }
 
 // Inicializar Logger
