@@ -19,13 +19,15 @@ jobs:
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
           HEROKU_APP_NAME: "computers-4-all-staging"
         run: |
-          ls api
+          if [ -d "./api/public" ]; then rm -Rf ./api/public; fi
+          mkdir -p ./api/public
+
           cd pwa
           npm install
           npm run build
-          mkdir -p ../api/public
           mv build/* ../api/public
           cd ..
+
           echo "
           machine api.heroku.com
               login $HEROKU_EMAIL
