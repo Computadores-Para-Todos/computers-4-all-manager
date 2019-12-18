@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
-import { Container, Segment, Header, Form, Button, Message } from 'semantic-ui-react';
+import { Container, Segment, Header, Form, Button, Message, Transition } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 const View = props => {
-  const [sucesso, setSucesso] = useState(false);
-  const [erro, setErro] = useState(false);
-  const [tentativa, setTentativa] = useState(false);
+  const [sucess, setSucess] = useState(false);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(false);
+  const [visible, setVisibility] = useState(false);
 
   //função para realizar autenticação do usuário
   const auth = props => {
-    if (tentativa) {
-      setErro(false);
-      setSucesso(!sucesso);
-      //chamada da api aqui com retorno para a funcao de callback de sucesso
+    if (attempt) {
+      setError(false);
+      setSucess(!sucess);
+      //chamada da api aqui com retorno para a funcao de callback de sucess
       props.callbackOk();
     } else {
-      setSucesso(false);
-      setErro(!erro);
-      //chamada da api aqui com retorno para a funcao de callback de erro
+      setSucess(false);
+      setError(!error);
+      //chamada da api aqui com retorno para a funcao de callback de error
       props.callbackNotOk();
     }
-    setTentativa(!tentativa);
+    setVisibility(true);
+    setAttempt(!attempt);
   };
 
   return (
@@ -34,7 +36,7 @@ const View = props => {
           <Form.Group widths="equal">
             <Form.Input type="password" fluid label="Senha" placeholder="******" minLength="6" required />
           </Form.Group>
-          <Form.Group style={styles.areaBotoes} widths="equal">
+          <Form.Group style={styles.buttonsForm} widths="equal">
             <Button color={'blue'}>{`Criar Conta`}</Button>
             <Button color={'green'} animated={'fade'}>
               <Button.Content visible>Já tenho Conta</Button.Content>
@@ -43,23 +45,27 @@ const View = props => {
           </Form.Group>
         </Form>
       </Segment>
-      {erro ? (
-        <Message
-          style={styles.message}
-          negative
-          onDismiss={() => alert('não pode ser fechado')}
-          header="Ocorreu um erro!"
-          content="Os dados estão incorretos!"
-        />
+      {error ? (
+        <Transition transitionOnMount visible={visible} animation={'fly down'}>
+          <Message
+            style={styles.message}
+            negative
+            onDismiss={() => setVisibility(false)}
+            header="Ocorreu um erro!"
+            content="Os dados estão incorretos!"
+          />
+        </Transition>
       ) : null}
-      {sucesso ? (
-        <Message
-          style={styles.message}
-          positive
-          onDismiss={() => alert('não pode ser fechado')}
-          header="Bem vindo!"
-          content="Você será redirecionado para o dashboard em instantes..."
-        />
+      {sucess ? (
+        <Transition transitionOnMount visible={visible} animation={'fly down'}>
+          <Message
+            style={styles.message}
+            positive
+            onDismiss={() => setVisibility(false)}
+            header="Bem vindo!"
+            content="Você será redirecionado para o dashboard em instantes..."
+          />
+        </Transition>
       ) : null}
     </Container>
   );
@@ -89,7 +95,7 @@ const styles = {
     marginBottom: '10%',
     marginTop: '5%'
   },
-  areaBotoes: {
+  buttonsForm: {
     marginTop: '5%',
     display: 'flex',
     flexDirection: 'row',

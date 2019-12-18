@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
-import Autenticacao from './Autenticacao';
+import Authentication from './Authentication';
 
 export const apiUrl = 'api.pc4all.com';
 
@@ -15,4 +15,6 @@ const callbackNotOk = () => {
   console.log('status: 400');
 };
 
-storiesOf('Autenticacao', module).add('view', () => <Autenticacao apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />);
+storiesOf('Authentication', module).add('view', () => (
+  <Authentication apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />
+));

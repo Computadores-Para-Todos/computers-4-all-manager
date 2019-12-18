@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import logger from './logger';
 import 'semantic-ui-css/semantic.css';
-import Autenticacao from './components/Autenticacao/Autenticacao';
+import Authentication from './components/Authentication/Authentication';
 
 console.log('.env', process.env);
 
@@ -27,7 +27,7 @@ function App() {
   };
   const apiUrl = 'https://api.pc4all.com';
 
-  return <Autenticacao apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />;
+  return <Authentication apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />;
 }
 
 export default App;
