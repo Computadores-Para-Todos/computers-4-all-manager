@@ -1,10 +1,10 @@
 on: push
 #on: pull_request
 
-name: ESLint check - Dev branch
+name: ESLint and Prettier check - Dev branch
 jobs:
-  eslit_check:
-    name: Deploy Api
+  api_eslit_prettier_check:
+    name: ESLing and Prettier check - API
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,29 @@ jobs:
 
       - name: API - ESlint
         run: cd api && npm run lint
+
+  pwa_eslit_prettier_check:
+    name: ESLing and Prettier check - PWA
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "11.x"
+
+      - name: PWA - Cache node modules
+        id: pwa-cache-node-modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: pwa-${{ runner.os }}-node_modules-${{ hashFiles('pwa/package-lock.json') }}
+
+      - name: PWA - Install Dependencies
+        run: cd pwa && npm ci
+
+      - name: PWA - Prettier
+        run: cd pwa && npm run prettier
+
+      - name: PWA - ESlint
+        run: cd pwa && npm run lint
