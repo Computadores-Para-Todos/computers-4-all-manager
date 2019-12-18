@@ -13,11 +13,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Build frontend
+      - name: Cache node modules
+        id: pwa-cache-node-modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: pwa-${{ runner.os }}-node_modules-${{ hashFiles('pwa/package-lock.json') }}
+
+      - name: PWA - Build frontend
         env:
           HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-          HEROKU_APP_NAME: "computers-4-all-staging"
+          HEROKU_APP_NAME: "computers-4-all-dev"
         run: |
           if [ -d "./api/public" ]; then rm -Rf ./api/public; fi
           mkdir -p ./api/public
@@ -27,11 +34,11 @@ jobs:
           mv build/* ../api/public
           cd ..
 
-      - name: Push to heroku
+      - name: API + PWA - Push to heroku
         env:
           HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
-          HEROKU_APP_NAME: "computers-4-all-staging"
+          HEROKU_APP_NAME: "computers-4-all-dev"
         run: |
           echo "
           machine api.heroku.com
