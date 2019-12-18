@@ -34,5 +34,3 @@ Temporary Items
 ## React and Node
 .env
 node_modules/
-api/public/
-pwa/build/
