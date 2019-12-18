@@ -1,8 +1,4 @@
-on:
-  check_suite:
-    types: [requested, rerequested]
-    branches:
-      - dev
+on: pull_request
 
 name: ESLint check - Dev branch
 jobs:
