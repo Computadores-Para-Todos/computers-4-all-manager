@@ -21,7 +21,6 @@ jobs:
           key: api-${{ runner.os }}-node_modules-${{ hashFiles('api/package-lock.json') }}
 
       - name: API - Install Dependencies
-        if: steps.api-cache-node-modules.outputs.cache-hit != 'true'
         run: cd api && npm ci
 
       - name: API - Prettier
