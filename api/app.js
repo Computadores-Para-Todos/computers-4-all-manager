@@ -20,6 +20,7 @@ if (process.env.ROLLBAR_TOKEN) {
   // throw new Error("Test error");
 }
 
+// Start express app
 const app = express();
 
 // Setup
