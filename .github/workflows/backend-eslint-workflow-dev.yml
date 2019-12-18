@@ -24,7 +24,7 @@ jobs:
 
       - name: API - Install Dependencies
         if: steps.api-cache-node-modules.outputs.cache-hit != 'true'
-        run: npm install
+        run: cd api && npm install
 
       - name: API - Prettier
         run: npm run prettier
