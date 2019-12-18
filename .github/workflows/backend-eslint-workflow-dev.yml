@@ -1,7 +1,8 @@
-on: push
-#  push:
-#    branches:
-#      - dev
+on:
+  check_suite:
+    types: [requested, rerequested]
+    branches:
+      - dev
 
 name: ESLint check - Dev branch
 jobs:
