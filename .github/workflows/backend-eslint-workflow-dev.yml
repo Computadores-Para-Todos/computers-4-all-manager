@@ -4,7 +4,7 @@ on: push
 name: ESLint and Prettier check - Dev branch
 jobs:
   api_eslit_prettier_check:
-    name: ESLing and Prettier check - API
+    name: API - ESLint and Prettier check
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,7 @@ jobs:
         run: cd api && npm run lint
 
   pwa_eslit_prettier_check:
-    name: ESLing and Prettier check - PWA
+    name: PWA - ESLint and Prettier check
     runs-on: ubuntu-latest
 
     steps:

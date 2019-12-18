@@ -16,6 +16,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "engines": {
+    "yarn": "Please, just use NPM on this project!"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
