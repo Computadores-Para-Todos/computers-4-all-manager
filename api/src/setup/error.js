@@ -1,4 +1,4 @@
-import logger from '../../../pwa/src/logger';
+const logger = require('../../logger');
 
 const createError = require('http-errors');
 

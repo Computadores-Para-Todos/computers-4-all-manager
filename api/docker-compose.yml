@@ -1,0 +1,27 @@
+# Docker compose para rodar banco de dados
+version: '3.3'
+services:
+  # Banco 
+  db:
+    container_name: pc4all-db
+    image: mysql
+    command: --log_error_verbosity=1
+    environment: 
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: pc4all
+        MYSQL_USER: pc4all
+        MYSQL_PASSWORD: pc4all
+
+    volumes: 
+      - ./temp/database:/var/lib/mysql
+    ports: 
+      - 3306:3306
+  # Admin
+  adminer:
+    depends_on: 
+      - db
+    image: adminer
+    ports:
+      - 8080:8080
+    environment: 
+      ADMINER_DESIGN: pepa-linha
