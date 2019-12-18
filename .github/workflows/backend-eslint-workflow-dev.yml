@@ -16,7 +16,7 @@ jobs:
         id: api-cache-node-modules
         uses: actions/cache@v1
         with:
-          path: /api/node_modules
+          path: api/node_modules
           key: api-${{ runner.os }}-node_modules-${{ hashFiles('api/package-lock.json') }}
 
       - name: API - Install Dependencies
