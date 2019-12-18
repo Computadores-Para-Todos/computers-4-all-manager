@@ -1,5 +1,4 @@
-on: push
-#on: pull_request
+on: pull_request
 
 name: ESLint and Prettier check - Dev branch
 jobs:
