@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: /api/node_modules
-          key: api-${{ runner.os }}-node_modules-${{ hashFiles('/api/package.json') }}
+          key: api-${{ runner.os }}-node_modules-${{ hashFiles('/api/package-lock.json') }}
 
       - name: API - Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
