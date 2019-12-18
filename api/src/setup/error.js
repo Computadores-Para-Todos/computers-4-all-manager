@@ -1,3 +1,5 @@
+import logger from '../../../pwa/src/logger';
+
 const createError = require('http-errors');
 
 module.exports = function(app) {
@@ -11,6 +13,11 @@ module.exports = function(app) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // Send error to rollbar when not on dev
+    if (req.app.get('env') !== 'development') {
+      logger.error(err);
+    }
 
     // render the error page
     res.status(err.status || 500);
