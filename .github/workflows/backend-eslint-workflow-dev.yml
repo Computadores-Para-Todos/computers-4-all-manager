@@ -1,0 +1,33 @@
+on: push
+#  push:
+#    branches:
+#      - dev
+
+name: ESLint check - Dev branch
+jobs:
+  eslit_check:
+    name: Deploy Api
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+          with:
+            node-version: "11.x"
+
+      - name: API - Cache node modules
+        id: api-cache-node-modules
+        uses: actions/cache@v1
+        with:
+          path: /api/node_modules
+          key: api-${{ runner.os }}-node_modules-${{ hashFiles('**/api/package-lock.json') }}
+
+      - name: API - Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      #- name: Prettier
+        #run: npm run fmt:check
+
+      - name: API - ESlint
+        run: npm run lint
