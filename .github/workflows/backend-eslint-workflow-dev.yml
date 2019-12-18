@@ -27,7 +27,7 @@ jobs:
         run: cd api && npm install
 
       - name: API - Prettier
-        run: npm run prettier
+        run: cd api && npm run prettier
 
       - name: API - ESlint
-        run: npm run lint
+        run: cd api && npm run lint
