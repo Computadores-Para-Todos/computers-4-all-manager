@@ -12,8 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-          with:
-            node-version: "11.x"
+        with:
+          node-version: "11.x"
 
       - name: API - Cache node modules
         id: api-cache-node-modules
@@ -26,8 +26,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
-      #- name: Prettier
-        #run: npm run fmt:check
+      - name: API - Prettier
+        run: npm run prettier
 
       - name: API - ESlint
         run: npm run lint
