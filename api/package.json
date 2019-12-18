@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./app.js",
-    "lint": "eslint ."
+    "start": "nodemon ./bin/www",
+    "lint": "eslint .",
+    "prettier": "prettier-check \"./**/*.js\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -31,11 +32,15 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "3.0.1",
     "husky": "^3.1.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "prettier-check": "^2.0.0"
   },
   "husky": {
     "hooks": {
       "pre-push": "npm run lint"
     }
+  },
+  "engines": {
+    "yarn": "Please, just use NPM on this project!"
   }
 }

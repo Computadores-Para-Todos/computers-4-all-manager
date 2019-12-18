@@ -6,11 +6,6 @@ const routes = require('./src/setup/routes');
 const expressConfig = require('./src/setup/expressConfig');
 const error = require('./src/setup/error');
 
-// Validar dotenv
-if (dotenv.error) {
-  throw dotenv.error;
-}
-
 const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
 
 // Validar arquivo .env
@@ -25,6 +20,7 @@ if (process.env.ROLLBAR_TOKEN) {
   // throw new Error("Test error");
 }
 
+// Start express app
 const app = express();
 
 // Setup

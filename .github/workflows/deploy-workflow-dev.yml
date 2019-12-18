@@ -1,0 +1,53 @@
+on:
+  push:
+    branches:
+      - dev
+
+name: Deploy to Heroku - Dev to Stagging
+jobs:
+  deploy_api:
+    name: Deploy Api
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Cache node modules
+        id: pwa-cache-node-modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: pwa-${{ runner.os }}-node_modules-${{ hashFiles('pwa/package-lock.json') }}
+
+      - name: PWA - Build frontend
+        env:
+          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+          HEROKU_APP_NAME: "computers-4-all-dev"
+        run: |
+          if [ -d "./api/public" ]; then rm -Rf ./api/public; fi
+          mkdir -p ./api/public
+          cd pwa
+          npm install
+          npm run build
+          mv build/* ../api/public
+          cd ..
+
+      - name: API + PWA - Push to heroku
+        env:
+          HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+          HEROKU_APP_NAME: "computers-4-all-dev"
+        run: |
+          echo "
+          machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_TOKEN
+          machine git.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_API_TOKEN
+          " > $HOME/.netrc
+          heroku login
+          heroku git:remote -a $HEROKU_APP_NAME
+          git subtree push --prefix api heroku master

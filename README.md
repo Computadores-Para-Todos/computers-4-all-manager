@@ -94,3 +94,11 @@ Os erros do projeto (em produção) serão logados no [Rollbar](https://rollbar.
 ## Husky
 
 O [Husky](https://github.com/typicode/husky) irá validar todas as regras do ESLint antes de cada commit, e só deixará subir códigos que estejam 100% dentro das regras definidas.
+
+## Integração contínua
+
+Foi utilizado o Github Actions para algumas ações relevantes:
+- A cada novo pull request será verificado se o código está de acordo com as regras do ESLint e Prettier, só permitindo o merge ser realizado se estiver tudo de acordo
+- A cada merge para branch `dev` o projeto será "buildado" e enviado para o Heroku, ficando disponível como ambiente para validação online 
+- A cada merge para branch `stagging` o mesmo acontece, ficando disponível em url de stagging 
+- A cada merge para branch `master` o mesmo acontece, ficando disponível na url de produção 

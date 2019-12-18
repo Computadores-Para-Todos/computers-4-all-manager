@@ -12,9 +12,13 @@
   "scripts": {
     "start": "react-scripts start",
     "lint": "eslint src",
+    "prettier": "prettier-check \"src/**/*.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "yarn": "Please, just use NPM on this project!"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,7 +42,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.17.0",
     "husky": "^3.1.0",
-    "prettier": "1.19.1"
+    "prettier": "^1.19.1",
+    "prettier-check": "^2.0.0"
   },
   "husky": {
     "hooks": {
