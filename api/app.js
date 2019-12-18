@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.set('view engine', 'html');
 
 // Require routes
-const indexRouter = require('./routes/index');
+const indexRouter = require( './routes/index');
 const usersRouter = require('./routes/users');
 
 // Declare routes
