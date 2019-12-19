@@ -1,5 +1,6 @@
 const express = require('express');
-const { withAuth } = require('../middlewares');
+const { withAuth, withRole } = require('../middlewares');
+const { ROLES } = require('../settings');
 
 const router = express.Router();
 
@@ -7,8 +8,8 @@ const UserController = require('../controllers/userController');
 
 router
   .route('/')
-  .post(UserController.store)
-  .get(UserController.index);
+  .post(withRole(ROLES.ADMIN), UserController.store)
+  .get(withRole(ROLES.ADMIN), UserController.index);
 
 router.post('/signup', UserController.signUp);
 router.get('/login', UserController.login);
@@ -16,8 +17,8 @@ router.get('/whoami', withAuth(), UserController.whoami);
 
 router
   .route('/:id')
-  .get(UserController.findById)
-  .put(UserController.update)
-  .delete(UserController.delete);
+  .get(withRole(ROLES.ADMIN), UserController.findById)
+  .put(withRole(ROLES.ADMIN), UserController.update)
+  .delete(withRole(ROLES.ADMIN), UserController.delete);
 
 module.exports = router;

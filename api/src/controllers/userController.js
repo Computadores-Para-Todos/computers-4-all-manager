@@ -1,11 +1,7 @@
 const { User } = require('../models');
 const { jwtSign, encryptCompare } = require('../utils');
 const { JWT_SECRET = 'c4all' } = process.env;
-
-const ROLES = {
-  USER: 1,
-  ADMIN: 2
-};
+const { ROLES } = require('../settings');
 
 class UserController {
   async signUp({ body: { email = '', password = '', ...body } }, res) {
@@ -39,15 +35,8 @@ class UserController {
   }
 
   async store(req, res) {
-    const { email } = req.body;
-
-    if (await User.findOne({ email })) {
-      return res.status(400).json({ error: 'Usuário já cadastrado' });
-    }
-
-    const userCreated = await User.create(req.body);
-    jwtSign();
-    return res.json(userCreated);
+    const user = await User.create(req.body);
+    return res.json(user);
   }
 
   async index(req, res) {
