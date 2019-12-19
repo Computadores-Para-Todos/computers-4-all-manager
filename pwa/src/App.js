@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import logger from './logger';
+import 'semantic-ui-css/semantic.css';
+import Authentication from './components/Authentication/Authentication';
 
 console.log('.env', process.env);
 
@@ -19,19 +19,15 @@ function App() {
     }
   });
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const callbackOk = () => {
+    console.log('status: 200');
+  };
+  const callbackNotOk = () => {
+    console.log('status: 400');
+  };
+  const apiUrl = 'https://api.pc4all.com';
+
+  return <Authentication apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />;
 }
 
 export default App;
