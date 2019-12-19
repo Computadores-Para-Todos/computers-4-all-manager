@@ -37,3 +37,4 @@ node_modules/
 api/public/
 pwa/build/
 
+yarn.lock
