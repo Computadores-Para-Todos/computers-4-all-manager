@@ -1,7 +1,6 @@
 on:
-  push:
-    branches:
-      - dev
+  pull_request:
+    types: [closed]
 
 name: Deploy to Heroku - Dev to Stagging
 jobs:
