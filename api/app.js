@@ -1,18 +1,16 @@
-const dotenv = require('dotenv').config();
-const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+require('express-async-errors');
+const dotenv = require('dotenv').config();
 const rollbar = require('./logger');
+const routes = require('./src/setup/routes');
+const expressConfig = require('./src/setup/expressConfig');
+const error = require('./src/setup/error');
 
-// Validar dotenv
-// if (dotenv.error) {
-//   throw dotenv.error;
-// }
+const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
+
 // Validar arquivo .env
-if (!process.env.ADMIN_EMAIL) {
-  throw new Error('O arquivo .env não foi carregado corretamente');
+if (!ADMIN_EMAIL || !DB_HOST || !DB_USERNAME || !DATABASE) {
+  throw new Error('O arquivo .env não foi carregado corretamente. Leia o README para mais informações.');
 }
 
 // Inicializar Logger
@@ -22,34 +20,20 @@ if (process.env.ROLLBAR_TOKEN) {
   // throw new Error("Test error");
 }
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
+// Start express app
 const app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// Setup
+expressConfig(app);
+routes(app);
+error(app);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Starting database
+require('./src/models');
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 module.exports = app;
