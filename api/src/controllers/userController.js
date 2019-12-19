@@ -32,6 +32,12 @@ class UserController {
     });
   }
 
+  async whoami({ auth: { email, role } }, res) {
+    res.send({
+      user: { email, role }
+    });
+  }
+
   async store(req, res) {
     const { email } = req.body;
 

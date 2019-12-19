@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const { withAuth } = require('../middlewares');
+
+const router = express.Router();
 
 const UserController = require('../controllers/userController');
 
@@ -10,6 +12,7 @@ router
 
 router.post('/signup', UserController.signUp);
 router.get('/login', UserController.login);
+router.get('/whoami', withAuth(), UserController.whoami);
 
 router
   .route('/:id')
