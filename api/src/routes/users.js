@@ -8,6 +8,9 @@ router
   .post(UserController.store)
   .get(UserController.index);
 
+router.post('/signup', UserController.signUp);
+router.get('/login', UserController.login);
+
 router
   .route('/:id')
   .get(UserController.findById)
