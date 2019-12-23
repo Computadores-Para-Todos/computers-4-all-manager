@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import { Container, Menu, Header, Icon, Dropdown, Divider, Responsive, Sidebar } from 'semantic-ui-react';
 
 import styles from './styles';
-
-const sideMenuItens = [
-  { as: 'a', name: 'Início', icon: 'home', to: '' },
-  { as: 'a', name: 'Atividades', icon: 'list', to: '' },
-  { as: 'a', name: 'Doadores', icon: 'handshake', to: '' },
-  { as: 'a', name: 'Dispositivos', icon: 'desktop', to: '' },
-  { as: 'a', name: null, icon: null, to: '' },
-  { as: 'a', name: 'Usuários', icon: 'users', to: '' }
-];
-
-const userMenuItens = [{ as: 'a', name: 'Perfil', to: '', icon: 'user' }];
 
 /**
  * View da interface geral do sistema
  *
  * @returns {React} Página de layout renderizada
  */
-function Layout({ activePage, selectPageCallback, logoutCallback, userName, render }) {
+function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
+  const location = useLocation();
+  const routesList = useMemo(() => userMenuItens.concat(...sideMenuItens), [sideMenuItens, userMenuItens]);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const toggleMenuVisibility = () => {
     setIsMenuVisible(oldValue => !oldValue);
@@ -53,7 +45,7 @@ function Layout({ activePage, selectPageCallback, logoutCallback, userName, rend
             <Dropdown text={userName}>
               <Dropdown.Menu>
                 {userMenuItens.map(item => (
-                  <Dropdown.Item key={item.name} as={item.as}>
+                  <Dropdown.Item key={item.name} as={Link} to={item.path}>
                     {item.icon && <Icon name={item.icon} />}
                     {item.name}
                   </Dropdown.Item>
@@ -83,11 +75,12 @@ function Layout({ activePage, selectPageCallback, logoutCallback, userName, rend
             {sideMenuItens.map(item => (
               <Menu.Item
                 key={item.name}
-                as={item.as}
+                as={Link}
+                to={item.path}
                 name={item.name}
-                active={activePage === item.name}
-                onClick={(_, { name }) => selectPageCallback(name)}
+                active={location.pathname === `/${item.name}`}
                 disabled={item.name === null}
+                onClick={() => setIsMenuVisible(false)}
               >
                 {item.icon && <Icon style={styles.menuIcon} name={item.icon} />}
                 {item.name}
@@ -95,7 +88,11 @@ function Layout({ activePage, selectPageCallback, logoutCallback, userName, rend
             ))}
           </Sidebar>
           <Sidebar.Pusher as={Container} style={styles.content} fluid>
-            {render()}
+            <Switch>
+              {routesList.map(item => (
+                <Route key={item.path} path={`/${item.path}`} exact={item.exact || false} component={item.component} />
+              ))}
+            </Switch>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Responsive>
@@ -103,12 +100,13 @@ function Layout({ activePage, selectPageCallback, logoutCallback, userName, rend
         <Menu inverted vertical style={styles.leftMenu}>
           {sideMenuItens.map(item => (
             <Menu.Item
+              as={Link}
+              to={item.path}
               key={item.name}
-              as={item.as}
               name={item.name}
-              active={activePage === item.name}
-              onClick={(_, { name }) => selectPageCallback(name)}
+              active={location.pathname === `/${item.name}`}
               disabled={item.name === null}
+              onClick={() => setIsMenuVisible(false)}
             >
               {item.icon && <Icon style={styles.menuIcon} name={item.icon} />}
               {item.name}
@@ -116,24 +114,39 @@ function Layout({ activePage, selectPageCallback, logoutCallback, userName, rend
           ))}
         </Menu>
         <Container style={styles.content} fluid>
-          {render()}
+          <Switch>
+            {routesList.map(item => (
+              <Route key={item.path} path={`/${item.path}`} exact component={item.component} />
+            ))}
+          </Switch>
         </Container>
       </Responsive>
     </div>
   );
 }
 
+const menuItem = PropTypes.shape({
+  /** Nome da que aparecerá no menu lateral */
+  name: PropTypes.string,
+  /** Icone exibido junto ao nome */
+  icon: PropTypes.string,
+  /** Rota na qual o a pagina será exibida */
+  path: PropTypes.string.isRequired,
+  /** Rota deve ser exata */
+  exact: PropTypes.bool,
+  /** Componente a ser renderizado */
+  component: PropTypes.elementType
+});
+
 Layout.propTypes = {
-  /** Nome da página sendo exibida */
-  activePage: PropTypes.string.isRequired,
-  /** Callback chamada ao selecionar uma nova página */
-  selectPageCallback: PropTypes.func.isRequired,
   /** Callback chamada ao clicar em sair */
   logoutCallback: PropTypes.func.isRequired,
   /** Nome do usuário a ser exibido no cando superior direito */
   userName: PropTypes.string.isRequired,
-  /** Elemento que deve ser exibido no centro da aplicação */
-  render: PropTypes.func.isRequired
+  /** Lista de itens que aparecerá no menu esquerdo e seus respectivos componentes*/
+  sideMenuItens: PropTypes.arrayOf(menuItem).isRequired,
+  /** Lista de item que aparecerá no dropdown do usuário */
+  userMenuItens: PropTypes.arrayOf(menuItem).isRequired
 };
 
 export default Layout;
