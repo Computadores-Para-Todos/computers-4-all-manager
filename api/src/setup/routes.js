@@ -1,9 +1,10 @@
-import indexRouter from '../routes/index';
-import usersRouter from '../routes/users';
-import authRouter from '../routes/auth';
+import indexRouter from '../routes/indexRouter';
+import usersRouter from '../routes/userRouter';
+import authRouter from '../routes/authRouter';
 
 /**
- * @param app
+ * Configura rotas do app
+ * @param {Express} app
  */
 export default function(app) {
   app.use('/api', indexRouter);

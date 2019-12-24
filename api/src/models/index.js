@@ -2,7 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 
+// models
+import UserModel from './UserModel';
+
 const basename = path.basename(__filename);
+const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
 const config = {
   dialect: 'mysql',
@@ -17,9 +21,26 @@ const config = {
     underscoredAll: true
   }
 };
-const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
 export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
+
+// Init Models
+UserModel.init(sequelize, Sequelize);
+
+/**
+ *
+ *
+ * @returns {class}
+ */
+function foo() {
+  return class {};
+}
+
+// Executa método associate, se existir, para criar relacionamentos
+const models = [UserModel];
+models
+  .filter(model => typeof model.associate === 'function')
+  .forEach(model => model.associate(models));
 
 sequelize.sync();
 
@@ -34,5 +55,5 @@ export function connect() {
     .catch(err => console.log('Unable to connect to the database:', err));
 }
 
-// export all models
-export { userModel } from './UserModel';
+// Export Models
+export { UserModel as User };

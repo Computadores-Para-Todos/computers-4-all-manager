@@ -1,6 +1,3 @@
 {
-    "presets": ["@babel/preset-env"],
-    "ignore": [
-        "**/database"
-      ]
+    "presets": [["@babel/preset-env", { "targets": { "node": "11" } }]]
 }

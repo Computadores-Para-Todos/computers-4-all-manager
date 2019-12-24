@@ -3,7 +3,7 @@
  */
 
 import { jwtVerify } from './utils';
-import { updateLastAccess } from './controllers/userController';
+import { User } from './models';
 const { JWT_SECRET = 'c4all' } = process.env;
 
 /**
@@ -36,11 +36,10 @@ export function withRole(roles) {
   if (typeof roles === 'string') roles = [roles];
   return [
     withAuth(),
-    function({ auth: { role, ...user } }, res, next) {
-      if (!roles.includes(role))
-        return res.status(401).send({ error: 'Unauthorized' });
-      next();
-      updateLastAccess(user);
+    function({ auth: { role, id } }, res, next) {
+      if (!roles.includes(role)) res.status(401).send({ error: 'Unauthorized' });
+      else next();
+      User.updateLastAccess(id);
     }
   ];
 }
