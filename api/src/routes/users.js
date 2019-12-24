@@ -12,7 +12,7 @@ router
   .get(withRole(ROLES.ADMIN), UserController.index);
 
 router.post('/signup', UserController.signUp);
-router.get('/login', UserController.login);
+router.post('/login', UserController.login);
 router.get('/whoami', withAuth(), UserController.whoami);
 
 router
