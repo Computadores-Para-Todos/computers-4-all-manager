@@ -34,7 +34,7 @@ function promisefy(fn) {
 
 /**
  * Transforma retorno da promise em tupla de sucesso e erro
- * @param {Promise} promise
+ * @param {Promise} promise - Promise
  * @returns {[*, Error]} Dados
  */
 function cathPromise(promise) {
