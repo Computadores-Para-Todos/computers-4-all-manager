@@ -13,6 +13,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
@@ -49,6 +50,7 @@
     }
   },
   "engines": {
-    "yarn": "Please, just use NPM on this project!"
+    "node": "11.x",
+    "npm": "6.x"
   }
 }

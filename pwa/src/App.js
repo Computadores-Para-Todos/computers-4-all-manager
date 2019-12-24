@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import logger from './logger';
 import 'semantic-ui-css/semantic.css';
-import Authentication from './components/Authentication/Authentication';
+import Authentication from './components/Authentication';
 
 console.log('.env', process.env);
 
@@ -19,15 +20,13 @@ function App() {
     }
   });
 
-  const callbackOk = () => {
-    console.log('status: 200');
-  };
-  const callbackNotOk = () => {
-    console.log('status: 400');
-  };
-  const apiUrl = 'https://api.pc4all.com';
+  const apiUrl = 'http://localhost:3001/api';
 
-  return <Authentication apiUrl={apiUrl} callbackOk={callbackOk} callbackNotOk={callbackNotOk} />;
+  return (
+    <BrowserRouter>
+      <Authentication apiUrl={apiUrl} />
+    </BrowserRouter>
+  );
 }
 
 export default App;

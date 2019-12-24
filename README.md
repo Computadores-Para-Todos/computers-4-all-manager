@@ -101,6 +101,10 @@ Os erros do projeto (em produção) serão logados no [Rollbar](https://rollbar.
 
 O [Husky](https://github.com/typicode/husky) irá validar todas as regras do ESLint antes de cada commit, e só deixará subir códigos que estejam 100% dentro das regras definidas.
 
+## Semantic Ui
+
+A interface está sendo construída usando [Semantic Ui](https://react.semantic-ui.com/).
+
 ## Integração contínua
 
 Foi utilizado o Github Actions para algumas ações relevantes:

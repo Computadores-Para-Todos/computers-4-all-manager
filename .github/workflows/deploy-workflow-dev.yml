@@ -1,6 +1,6 @@
-on:
-  pull_request:
-    types: [closed]
+on: push
+  #pull_request:
+  #  types: [closed]
 
 name: Deploy to Heroku - Dev to Stagging
 jobs:
