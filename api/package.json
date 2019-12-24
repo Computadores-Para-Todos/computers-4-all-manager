@@ -43,6 +43,7 @@
     }
   },
   "engines": {
-    "yarn": "Please, just use NPM on this project!"
+    "node": "11.x",
+    "npm": "6.x"
   }
 }
