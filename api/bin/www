@@ -27,6 +27,8 @@ server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
+ *
+ * @param val
  */
 function normalizePort(val) {
   const port = parseInt(val, 10);

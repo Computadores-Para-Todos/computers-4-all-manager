@@ -1,79 +1,100 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Segment, Header, Form, Button, Message, Transition } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-const View = props => {
-  const [sucess, setSucess] = useState(false);
-  const [error, setError] = useState(false);
-  const [attempt, setAttempt] = useState(false);
-  const [visible, setVisibility] = useState(false);
+import useForm from '../../hooks/useForm';
 
-  //função para realizar autenticação do usuário
-  const auth = props => {
-    if (attempt) {
-      setError(false);
-      setSucess(!sucess);
-      //chamada da api aqui com retorno para a funcao de callback de sucess
-      props.callbackOk();
-    } else {
-      setSucess(false);
-      setError(!error);
-      //chamada da api aqui com retorno para a funcao de callback de error
-      props.callbackNotOk();
-    }
-    setVisibility(true);
-    setAttempt(!attempt);
+/**
+ * View do formulário de autenticação do sistema
+ *
+ * @returns {React} Pagina de autenticação renderizada
+ */
+function View({ onSubmit, schema, errorMessage }) {
+  const [setValue, handleSubmit, values, errors] = useForm(onSubmit, schema);
+
+  const handleChange = (_, { name, value }) => {
+    setValue(name, value);
   };
 
   return (
     <Container style={styles.container}>
       <Segment style={styles.segment}>
         <Header style={styles.header}>PC4All - Manager</Header>
-        <Form onSubmit={() => auth(props)}>
+        <Form noValidate={true} onSubmit={handleSubmit}>
           <Form.Group widths="equal">
-            <Form.Input type="email" fluid label="Email" placeholder="exemplo@exemplo.com" required />
+            <Form.Input
+              id="email"
+              name="email"
+              type="email"
+              fluid
+              label="Email"
+              placeholder="exemplo@exemplo.com"
+              value={values.email || ''}
+              onChange={handleChange}
+              error={
+                errors.email
+                  ? {
+                      content: errors.email,
+                      pointing: 'above'
+                    }
+                  : null
+              }
+              required
+            />
           </Form.Group>
           <Form.Group widths="equal">
-            <Form.Input type="password" fluid label="Senha" placeholder="******" minLength="6" required />
+            <Form.Input
+              id="password"
+              name="password"
+              type="password"
+              fluid
+              label="Senha"
+              placeholder="******"
+              minLength="6"
+              value={values.password || ''}
+              onChange={handleChange}
+              error={
+                errors.password
+                  ? {
+                      content: errors.password,
+                      pointing: 'above'
+                    }
+                  : null
+              }
+              required
+            />
           </Form.Group>
           <Form.Group style={styles.buttonsForm} widths="equal">
-            <Button color={'blue'}>{`Criar Conta`}</Button>
-            <Button color={'green'} animated={'fade'}>
+            <Button color={'blue'} onClick={() => setValue('submit', 'signup')}>
+              Criar Conta
+            </Button>
+            <Button color={'green'} animated={'fade'} onClick={() => setValue('submit', 'login')}>
               <Button.Content visible>Já tenho Conta</Button.Content>
               <Button.Content hidden>Entrar Agora</Button.Content>
             </Button>
           </Form.Group>
         </Form>
       </Segment>
-      {error ? (
-        <Transition transitionOnMount visible={visible} animation={'fly down'}>
-          <Message
-            style={styles.message}
-            negative
-            onDismiss={() => setVisibility(false)}
-            header="Ocorreu um erro!"
-            content="Os dados estão incorretos!"
-          />
-        </Transition>
-      ) : null}
-      {sucess ? (
-        <Transition transitionOnMount visible={visible} animation={'fly down'}>
-          <Message
-            style={styles.message}
-            positive
-            onDismiss={() => setVisibility(false)}
-            header="Bem vindo!"
-            content="Você será redirecionado para o dashboard em instantes..."
-          />
+      {errorMessage ? (
+        <Transition transitionOnMount animation={'fly down'}>
+          <Message style={styles.message} negative header="Ocorreu um erro!" content={errorMessage} />
         </Transition>
       ) : null}
     </Container>
   );
-};
+}
 
 View.propTypes = {
-  callbackOk: PropTypes.func,
-  callbackNotOk: PropTypes.func
+  /** Callback chamada ao submeter o formulário */
+  onSubmit: PropTypes.func.isRequired,
+  /** Scehma usado para a validação dos campos */
+  schema: PropTypes.object.isRequired,
+  /** Menagem de erro a ser exibida */
+  errorMessage: PropTypes.string
+};
+
+View.defaultProps = {
+  errorMessage: null
 };
 
 const styles = {

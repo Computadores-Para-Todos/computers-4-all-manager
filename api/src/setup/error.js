@@ -1,4 +1,4 @@
-import logger from '../../../pwa/src/logger';
+const logger = require('../../logger');
 
 const createError = require('http-errors');
 
@@ -10,6 +10,7 @@ module.exports = function(app) {
 
   // error handler
   app.use((err, req, res, next) => {
+    console.error(err);
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

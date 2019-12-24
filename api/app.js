@@ -10,7 +10,9 @@ const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
 
 // Validar arquivo .env
 if (!ADMIN_EMAIL || !DB_HOST || !DB_USERNAME || !DATABASE) {
-  throw new Error('O arquivo .env não foi carregado corretamente. Leia o README para mais informações.');
+  throw new Error(
+    'O arquivo .env não foi carregado corretamente. Leia o README para mais informações.'
+  );
 }
 
 // Inicializar Logger
@@ -31,9 +33,9 @@ error(app);
 // Starting database
 require('./src/models');
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });
 
 module.exports = app;
