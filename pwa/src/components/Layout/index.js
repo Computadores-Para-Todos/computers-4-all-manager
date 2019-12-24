@@ -1,5 +1,5 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import PropTypes from 'prop-types';
 
 import Layout from './Layout';
 
@@ -23,10 +23,12 @@ const dummyPage = title => {
 };
 
 /**
+ * Container da interface geral do sistema
  *
+ * @returns {React} Página de layout renderizada
  */
 function LayoutContainer({ user, logoutCallback }) {
-  const userName = 'Usuário';
+  const userName = user.email;
 
   const sideMenuItens = [
     { name: 'Início', icon: 'home', path: '', exact: true, component: dummyPage('Início') },
@@ -41,5 +43,14 @@ function LayoutContainer({ user, logoutCallback }) {
 
   return <Layout userName={userName} logoutCallback={logoutCallback} sideMenuItens={sideMenuItens} userMenuItens={userMenuItens} />;
 }
+
+LayoutContainer.propTypes = {
+  /** Objeto contendo os dados do usuário
+   * (detalhes especificos do que será armazenado ainda não foi definido)
+   **/
+  user: PropTypes.object.isRequired,
+  /** Função que será chamada ao apertar o botão de logout */
+  logoutCallback: PropTypes.func.isRequired
+};
 
 export default LayoutContainer;

@@ -1,7 +1,25 @@
 import { useState, useEffect } from 'react';
 
 /**
+ * @typedef {Function} ValueSetter - Função utilizada para atualizar um valor da lista de valores
+ */
+/**
+ * @typedef {Function} HandleSubmit - Função que deve ser utilizada no handleSubmit do form
+ */
+/**
+ * @typedef {[string]} ValueList - Lista de valores
+ */
+/**
+ * @typedef {[string]} ErrorList - Lista de erros de validação
+ */
+
+/**
+ * Hook para definir forms com estados e validação de campos através de um schema
  *
+ * @param {Function} callback - Função que será chamada ao submeter o formulário com todos os dados válidos
+ * @param {object} schema - Schema que validará o formulario.
+ *
+ * @returns {[ValueSetter, HandleSubmit, ValueList, ErrorList]} -
  */
 function useForm(callback, schema) {
   const [values, setValues] = useState({});

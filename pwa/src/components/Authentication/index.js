@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import axios from 'axios';
 
@@ -15,7 +16,11 @@ const signSchema = Yup.object().shape({
 });
 
 /**
+ * Container responsável pela autenticação do usuário e exibição do formulário
+ * de autenticação caso o usuário não esteja logado no sistema.
  *
+ * @returns {React} Layout do sistema caso logado ou formulário de autenticação,
+ * caso o contrário
  */
 function AuthenticationContainer({ apiUrl }) {
   const [user, setUser] = useState(null);
@@ -24,7 +29,7 @@ function AuthenticationContainer({ apiUrl }) {
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(storedUser);
+      setUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -33,10 +38,15 @@ function AuthenticationContainer({ apiUrl }) {
       'user',
       JSON.stringify({
         token,
-        user
+        email: user.email,
+        role: user.role
       })
     );
-    setUser({ token, user });
+    setUser({
+      token,
+      email: user.email,
+      role: user.role
+    });
     setError(null);
   };
 
@@ -54,7 +64,6 @@ function AuthenticationContainer({ apiUrl }) {
     if (values.submit === 'login') {
       try {
         const response = await axios.post(`${apiUrl}/users/login`, payload);
-        console.log(response);
         if (response.status === 200) {
           const { token, user } = response.data;
           saveUser(token, user);
@@ -92,5 +101,10 @@ function AuthenticationContainer({ apiUrl }) {
     <Authentication onSubmit={handleSubmit} schema={signSchema} errorMessage={error} />
   );
 }
+
+AuthenticationContainer.propTypes = {
+  /** URL base da api */
+  apiUrl: PropTypes.string.isRequired
+};
 
 export default AuthenticationContainer;

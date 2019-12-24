@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import useForm from '../../hooks/useForm';
 
 /**
+ * View do formulário de autenticação do sistema
  *
+ * @returns {React} Pagina de autenticação renderizada
  */
 function View({ onSubmit, schema, errorMessage }) {
   const [setValue, handleSubmit, values, errors] = useForm(onSubmit, schema);
