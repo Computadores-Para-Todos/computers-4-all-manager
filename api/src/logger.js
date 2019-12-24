@@ -1,4 +1,4 @@
-const Rollbar = require('rollbar');
+import Rollbar from 'rollbar';
 
 // Inicializar Rollbar sem configurações
 const rollbar = new Rollbar({});
@@ -26,4 +26,4 @@ const logger = {
   }
 };
 
-module.exports = logger;
+export default logger;

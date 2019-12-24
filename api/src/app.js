@@ -1,16 +1,18 @@
-const express = require('express');
-require('express-async-errors');
-const dotenv = require('dotenv').config();
-const rollbar = require('./logger');
-const routes = require('./src/setup/routes');
-const expressConfig = require('./src/setup/expressConfig');
-const error = require('./src/setup/error');
+import express from 'express';
+import 'express-async-errors';
+import rollbar from './logger';
+import routes from './setup/routes';
+import expressConfig from './setup/expressConfig';
+import error from './setup/error';
+import { connect } from './models';
 
 const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
 
 // Validar arquivo .env
 if (!ADMIN_EMAIL || !DB_HOST || !DB_USERNAME || !DATABASE) {
-  throw new Error('O arquivo .env não foi carregado corretamente. Leia o README para mais informações.');
+  throw new Error(
+    'O arquivo .env não foi carregado corretamente. Leia o README para mais informações.'
+  );
 }
 
 // Inicializar Logger
@@ -29,11 +31,11 @@ routes(app);
 error(app);
 
 // Starting database
-require('./src/models');
+connect();
 
 // const port = process.env.PORT || 3000;
 // app.listen(port, () => {
 //   console.log(`Server running on port ${port}`);
 // });
 
-module.exports = app;
+export default app;

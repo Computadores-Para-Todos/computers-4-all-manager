@@ -1,10 +1,8 @@
-'use strict';
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
 const config = {
   dialect: 'mysql',
@@ -19,27 +17,22 @@ const config = {
     underscoredAll: true
   }
 };
+const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
-const db = {};
-const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
-
-sequelize
-  .authenticate()
-  .then(() => console.log('Connection has been established successfully.'))
-  .catch(err => console.log('Unable to connect to the database:', err));
-
-fs.readdirSync(__dirname)
-  .filter(file => {
-    return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
-  })
-  .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
+export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
 
 sequelize.sync();
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+/**
+ * Connect to the database
+ * @returns {Promise}
+ */
+export function connect() {
+  return sequelize
+    .authenticate()
+    .then(() => console.log('Connection has been established successfully.'))
+    .catch(err => console.log('Unable to connect to the database:', err));
+}
 
-module.exports = db;
+// export all models
+export { userModel } from './UserModel';

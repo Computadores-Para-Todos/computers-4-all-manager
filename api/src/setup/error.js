@@ -1,8 +1,10 @@
-const logger = require('../../logger');
+import logger from '../logger';
+import createError from 'http-errors';
 
-const createError = require('http-errors');
-
-module.exports = function(app) {
+/**
+ * @param app
+ */
+export default function(app) {
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
     next(createError(404));
@@ -24,4 +26,4 @@ module.exports = function(app) {
     res.status(err.status || 500);
     res.json({ error: err });
   });
-};
+}

@@ -1,12 +1,12 @@
-const { User } = require('../models');
-const { Op } = require('sequelize');
+import { User } from '../models';
+import { Op } from 'sequelize';
 
 /**
  * Cria usuário
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-async function store(req, res) {
+export async function store(req, res) {
   const user = await User.create(req.body);
   res.json(user);
 }
@@ -16,7 +16,7 @@ async function store(req, res) {
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-async function index(req, res) {
+export async function index(req, res) {
   const allUsers = await User.findAll({ where: { status: 'active' } });
   res.json(allUsers);
 }
@@ -27,7 +27,7 @@ async function index(req, res) {
  * @param {Express.Response} res
  * @returns {void}
  */
-async function update(req, res) {
+export async function update(req, res) {
   const { id } = req.params;
 
   const usersUpdated = await User.update(req.body, { where: { id } });
@@ -44,7 +44,7 @@ async function update(req, res) {
  * @param {Express.Response} res
  * @returns {void}
  */
-async function findById(req, res) {
+export async function findById(req, res) {
   const { id } = req.params;
 
   const user = await User.findOne({ where: { id } });
@@ -60,7 +60,7 @@ async function findById(req, res) {
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-async function destroy(req, res) {
+export async function destroy(req, res) {
   const { id } = req.params;
 
   const user = await User.destroy({ where: { id } });
@@ -72,7 +72,7 @@ async function destroy(req, res) {
  * @param {object} { id } usuário
  * @returns {Promise} query
  */
-async function updateLastAccess({ id }) {
+export async function updateLastAccess({ id }) {
   // data de hoje, às 0H
   const now = new Date();
   now.setHours(0);
@@ -94,12 +94,3 @@ async function updateLastAccess({ id }) {
     }
   );
 }
-
-module.exports = {
-  store,
-  index,
-  update,
-  findById,
-  destroy,
-  updateLastAccess
-};

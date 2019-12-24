@@ -1,6 +1,6 @@
-const { encrypt } = require('../utils');
+import { encrypt } from '../utils';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const { STRING, INTEGER, DATE, DATEONLY } = DataTypes;
   const User = sequelize.define('User', {
     thumb: STRING,

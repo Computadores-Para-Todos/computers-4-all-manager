@@ -1,16 +1,15 @@
-const express = require('express');
-const { withAuth, withRole } = require('../middlewares');
-const { ROLES } = require('../settings');
-
-const router = express.Router();
-
-const {
+import express from 'express';
+import { withAuth, withRole } from '../middlewares';
+import { ROLES } from '../settings';
+import {
   store,
   index,
   findById,
   update,
   destroy
-} = require('../controllers/userController');
+} from '../controllers/userController';
+
+const router = express.Router();
 
 router
   .route('/')
@@ -23,4 +22,4 @@ router
   .put(withRole(ROLES.ADMIN), update)
   .delete(withRole(ROLES.ADMIN), destroy);
 
-module.exports = router;
+export default router;
