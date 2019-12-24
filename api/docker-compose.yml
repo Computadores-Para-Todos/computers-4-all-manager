@@ -7,8 +7,8 @@ services:
     image: mysql:5.7
     command: --log_error_verbosity=1
     environment: 
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: pc4all
+        MYSQL_ROOT_PASSWORD: pc4all
+        MYSQL_DATABASE: computer4all
         MYSQL_USER: pc4all
         MYSQL_PASSWORD: pc4all
 
