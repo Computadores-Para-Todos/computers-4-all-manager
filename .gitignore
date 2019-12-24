@@ -34,3 +34,8 @@ Temporary Items
 ## React and Node
 .env
 node_modules/
+api/public/
+pwa/build/
+
+## Yarn should not be used
+yarn.lock
