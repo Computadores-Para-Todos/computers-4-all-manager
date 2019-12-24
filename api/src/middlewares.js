@@ -22,7 +22,6 @@ function withAuth() {
       .then(decoded => {
         req.auth = decoded;
         next();
-        userController.updateLastAccess(decoded);
       })
       .catch(err => res.status(401).send({ error: err.message }));
   };
@@ -38,7 +37,8 @@ function withRole(roles) {
   return [
     withAuth(),
     function({ auth: { role, ...user } }, res, next) {
-      if (!roles.includes(role)) return res.status(401).send({ error: 'Unauthorized' });
+      if (!roles.includes(role))
+        return res.status(401).send({ error: 'Unauthorized' });
       next();
       userController.updateLastAccess(user);
     }

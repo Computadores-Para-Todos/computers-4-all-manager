@@ -4,17 +4,23 @@ const { ROLES } = require('../settings');
 
 const router = express.Router();
 
-const UserController = require('../controllers/userController');
+const {
+  store,
+  index,
+  findById,
+  update,
+  destroy
+} = require('../controllers/userController');
 
 router
   .route('/')
-  .post(withRole(ROLES.ADMIN), UserController.store)
-  .get(withRole(ROLES.ADMIN), UserController.index);
+  .post(withRole(ROLES.ADMIN), store)
+  .get(withRole(ROLES.ADMIN), index);
 
 router
   .route('/:id')
-  .get(withRole(ROLES.ADMIN), UserController.findById)
-  .put(withRole(ROLES.ADMIN), UserController.update)
-  .delete(withRole(ROLES.ADMIN), UserController.delete);
+  .get(withRole(ROLES.ADMIN), findById)
+  .put(withRole(ROLES.ADMIN), update)
+  .delete(withRole(ROLES.ADMIN), destroy);
 
 module.exports = router;
