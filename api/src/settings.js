@@ -5,8 +5,8 @@
 
 // Roles do sistema
 const ROLES = {
-  USER: 1,
-  ADMIN: 2
+  USER: 'user',
+  ADMIN: 'admin'
 };
 
 module.exports = {

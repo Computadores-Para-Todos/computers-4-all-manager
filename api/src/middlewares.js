@@ -4,6 +4,7 @@
 
 const { jwtVerify } = require('./utils');
 const { JWT_SECRET = 'c4all' } = process.env;
+const userController = require('./controllers/userController');
 
 /**
  * Usado para rotas que precisam do usuário autenticado.
@@ -21,6 +22,7 @@ function withAuth() {
       .then(decoded => {
         req.auth = decoded;
         next();
+        userController.updateLastAccess(decoded);
       })
       .catch(err => res.status(401).send({ error: err.message }));
   };
@@ -32,12 +34,13 @@ function withAuth() {
  * @returns {[Function]} middleware
  */
 function withRole(roles) {
-  if (typeof roles === 'number') roles = [roles];
+  if (typeof roles === 'string') roles = [roles];
   return [
     withAuth(),
-    function({ auth: { role } }, res, next) {
-      if (roles.includes(role)) return next();
-      res.status(401).send({ error: 'Unauthorized' });
+    function({ auth: { role, ...user } }, res, next) {
+      if (!roles.includes(role)) return res.status(401).send({ error: 'Unauthorized' });
+      next();
+      userController.updateLastAccess(user);
     }
   ];
 }

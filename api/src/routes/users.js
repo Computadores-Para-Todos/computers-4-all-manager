@@ -11,10 +11,6 @@ router
   .post(withRole(ROLES.ADMIN), UserController.store)
   .get(withRole(ROLES.ADMIN), UserController.index);
 
-router.post('/signup', UserController.signUp);
-router.get('/login', UserController.login);
-router.get('/whoami', withAuth(), UserController.whoami);
-
 router
   .route('/:id')
   .get(withRole(ROLES.ADMIN), UserController.findById)

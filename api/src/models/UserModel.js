@@ -1,17 +1,16 @@
-const { encrypt, encryptCompare } = require('../utils');
+const { encrypt } = require('../utils');
 
 module.exports = (sequelize, DataTypes) => {
+  const { STRING, INTEGER, DATE, DATEONLY } = DataTypes;
   const User = sequelize.define('User', {
-    thumb: DataTypes.STRING,
-    name: DataTypes.STRING,
-    lastname: DataTypes.STRING,
-    document: DataTypes.STRING,
-    genre: DataTypes.INTEGER,
-    birthday: DataTypes.DATEONLY,
-    phone: DataTypes.STRING,
-    cell: DataTypes.STRING,
+    thumb: STRING,
+    name: STRING,
+    document: STRING,
+    genre: INTEGER,
+    birthday: DATEONLY,
+    phone: STRING,
     email: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
       unique: true,
       validate: {
@@ -19,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     password: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
       validate: {
         notEmpty: {
@@ -31,32 +30,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       set(val) {
-        this.setDataValue('password', val);
-        if (val) this.setDataValue('password', encrypt(val));
+        if (val && val.length >= 6) this.setDataValue('password', encrypt(val));
+        else this.setDataValue('');
       }
     },
-    // registragion: DataTypes.DATE,
-    // lastupdate: DataTypes.DATE,
-    lastaccess: DataTypes.DATE,
+    lastaccess: DATE,
     role: {
-      type: DataTypes.INTEGER,
+      type: STRING,
       allowNull: false
     },
-    blocking_reason: DataTypes.STRING,
     status: {
-      type: DataTypes.STRING,
+      type: STRING,
       defaultValue: 'active'
     }
-    // },
-    // {
-    //   hooks: {
-    //     beforeSave: async user => {
-    //       if (user.password) {
-    //         user.password_hash = await bcrypt.hash(user.password, 8);
-    //       }
-    //     }
-    //   }
-    // }
   });
 
   return User;

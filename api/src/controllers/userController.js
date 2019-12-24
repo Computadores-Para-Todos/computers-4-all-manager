@@ -1,39 +1,7 @@
 const { User } = require('../models');
-const { jwtSign, encryptCompare } = require('../utils');
-const { JWT_SECRET = 'c4all' } = process.env;
-const { ROLES } = require('../settings');
+const { Op } = require('sequelize');
 
 class UserController {
-  async signUp({ body: { email = '', password = '', ...body } }, res) {
-    const user = (await User.create({ ...body, email, password, role: ROLES.USER })).toJSON();
-    const token = await jwtSign(user, JWT_SECRET);
-    console.log(user);
-
-    res.send({
-      user: { email, role: user.role },
-      token
-    });
-  }
-
-  async login({ body: { email = '', password = '' } }, res) {
-    const user = await User.findOne({ where: { email: email } });
-    if (!user || !encryptCompare(password, user.password))
-      return res.status(401).send({ error: 'Login inválido' });
-
-    const token = await jwtSign(user.toJSON(), JWT_SECRET);
-
-    res.send({
-      user: { email, role: user.role },
-      token
-    });
-  }
-
-  async whoami({ auth: { email, role } }, res) {
-    res.send({
-      user: { email, role }
-    });
-  }
-
   async store(req, res) {
     const user = await User.create(req.body);
     return res.json(user);
@@ -49,7 +17,8 @@ class UserController {
 
     const usersUpdated = await User.update(req.body, { where: { id } });
 
-    if (usersUpdated[0] === 0) return res.status(404).json({ error: 'Usuário não localizado' });
+    if (usersUpdated[0] === 0)
+      return res.status(404).json({ error: 'Usuário não localizado' });
 
     res.json(usersUpdated);
   }
@@ -59,7 +28,8 @@ class UserController {
 
     const user = await User.findOne({ where: { id } });
 
-    if (user === null) return res.status(404).json({ error: 'Usuário não localizado' });
+    if (user === null)
+      return res.status(404).json({ error: 'Usuário não localizado' });
 
     res.json(user);
   }
@@ -69,6 +39,35 @@ class UserController {
 
     const user = await User.destroy({ where: { id } });
     res.json(user);
+  }
+
+  /**
+   * Atualiza a data do último acesso
+   * @param {object} { id } usuário
+   * @returns {Promise} query
+   * @memberof UserController
+   */
+  async updateLastAccess({ id }) {
+    // data de hoje, às 0H
+    const now = new Date();
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+
+    console.log('lastaccess');
+    return await User.update(
+      { lastaccess: new Date() },
+      {
+        where: {
+          id,
+          [Op.or]: [
+            { lastaccess: { [Op.lt]: now } },
+            { lastaccess: { [Op.eq]: null } }
+          ]
+        }
+      }
+    );
   }
 }
 
