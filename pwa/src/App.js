@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import logger from './logger';
 import 'semantic-ui-css/semantic.css';
-import Authentication from './components/Authentication';
+import Routes from './routes';
 
 console.log('.env', process.env);
 
@@ -20,11 +20,9 @@ function App() {
     }
   });
 
-  const apiUrl = 'http://localhost:3001/api';
-
   return (
     <BrowserRouter>
-      <Authentication apiUrl={apiUrl} />
+      <Routes />
     </BrowserRouter>
   );
 }
