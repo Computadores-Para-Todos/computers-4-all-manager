@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import axios from 'axios';
+
+import api from '../../services/api';
 
 import Authentication from './Authentication';
-import Layout from '../Layout';
 
 const signSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,16 +22,9 @@ const signSchema = Yup.object().shape({
  * @returns {React} Layout do sistema caso logado ou formulário de autenticação,
  * caso o contrário
  */
-function AuthenticationContainer({ apiUrl }) {
-  const [user, setUser] = useState(null);
+function AuthenticationContainer() {
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const history = useHistory();
 
   const saveUser = (token, user) => {
     localStorage.setItem(
@@ -39,20 +32,11 @@ function AuthenticationContainer({ apiUrl }) {
       JSON.stringify({
         token,
         email: user.email,
-        role: user.role
+        role: user.role,
+        signed: true
       })
     );
-    setUser({
-      token,
-      email: user.email,
-      role: user.role
-    });
-    setError(null);
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+    history.push('/');
   };
 
   const handleSubmit = async values => {
@@ -63,7 +47,7 @@ function AuthenticationContainer({ apiUrl }) {
 
     if (values.submit === 'login') {
       try {
-        const response = await axios.post(`${apiUrl}/users/login`, payload);
+        const response = await api.post('/users/login', payload);
         if (response.status === 200) {
           const { token, user } = response.data;
           saveUser(token, user);
@@ -79,7 +63,7 @@ function AuthenticationContainer({ apiUrl }) {
     }
     if (values.submit === 'signup') {
       try {
-        const response = await axios.post(`${apiUrl}/users/signup`, payload);
+        const response = await api.post('/users/signup', payload);
         if (response.status === 200) {
           const { token, user } = response.data;
           saveUser(token, user);
@@ -95,16 +79,7 @@ function AuthenticationContainer({ apiUrl }) {
     }
   };
 
-  return user ? (
-    <Layout user={user} logoutCallback={handleLogout} />
-  ) : (
-    <Authentication onSubmit={handleSubmit} schema={signSchema} errorMessage={error} />
-  );
+  return <Authentication onSubmit={handleSubmit} schema={signSchema} errorMessage={error} />;
 }
-
-AuthenticationContainer.propTypes = {
-  /** URL base da api */
-  apiUrl: PropTypes.string.isRequired
-};
 
 export default AuthenticationContainer;
