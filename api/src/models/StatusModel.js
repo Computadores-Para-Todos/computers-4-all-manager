@@ -1,5 +1,4 @@
-import { Model, Op } from 'sequelize';
-import { encrypt } from '../utils';
+import { Model } from 'sequelize';
 
 /**
  * Model de usuário
