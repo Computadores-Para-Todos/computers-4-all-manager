@@ -1,11 +1,8 @@
-import fs from 'fs';
-import path from 'path';
 import Sequelize from 'sequelize';
-
 // models
 import UserModel from './UserModel';
+import StatusModel from './StatusModel';
 
-const basename = path.basename(__filename);
 const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
 const config = {
@@ -24,11 +21,10 @@ const config = {
 
 export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
 
-// Init Models
-UserModel.init(sequelize, Sequelize);
-
+const models = [UserModel, StatusModel];
+// Inicializa modelos
+models.forEach(model => model.init(sequelize, Sequelize));
 // Executa método associate, se existir, para criar relacionamentos
-const models = [UserModel];
 models
   .filter(model => typeof model.associate === 'function')
   .forEach(model => model.associate(models));
@@ -47,4 +43,4 @@ export function connect() {
 }
 
 // Export Models
-export { UserModel as User };
+export { UserModel as User, StatusModel as Status };

@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import rollbar from './logger';
-import routes from './setup/routes';
+import { setupRouters } from './routers';
 import expressConfig from './setup/expressConfig';
 import error from './setup/error';
 import { connect } from './models';
@@ -27,7 +27,7 @@ const app = express();
 
 // Setup
 expressConfig(app);
-routes(app);
+setupRouters(app);
 error(app);
 
 // Starting database

@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import { withAuth, withRole } from '../middlewares';
 import { ROLES } from '../settings';
 import { User } from '../models';
@@ -6,7 +6,7 @@ import { User } from '../models';
 /**
  * Router de usuário
  */
-const userRouter = express.Router();
+const userRouter = Router();
 
 userRouter
   .route('/')
