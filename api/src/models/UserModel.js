@@ -3,7 +3,7 @@ import { encrypt } from '../utils';
 
 /**
  * Model de usuário
- * @export
+ * @exports
  * @class UserModel
  * @augments {Model}
  * @see https://codewithhugo.com/using-es6-classes-for-sequelize-4-models/

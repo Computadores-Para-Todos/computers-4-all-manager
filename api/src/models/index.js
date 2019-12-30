@@ -27,15 +27,6 @@ export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, confi
 // Init Models
 UserModel.init(sequelize, Sequelize);
 
-/**
- *
- *
- * @returns {class}
- */
-function foo() {
-  return class {};
-}
-
 // Executa método associate, se existir, para criar relacionamentos
 const models = [UserModel];
 models
@@ -46,7 +37,7 @@ sequelize.sync();
 
 /**
  * Connect to the database
- * @returns {Promise}
+ * @returns {Promise} connection
  */
 export function connect() {
   return sequelize

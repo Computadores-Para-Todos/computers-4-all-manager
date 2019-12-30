@@ -24,12 +24,7 @@
       }
     ],
     "valid-jsdoc": [
-      "error",
-      {
-        "requireReturn": false,
-        "requireParamDescription": false,
-        "requireReturnDescription": false
-      }
+      "error"
     ],
     "valid-typeof": [
       "error",

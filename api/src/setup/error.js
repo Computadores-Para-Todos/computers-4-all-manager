@@ -1,10 +1,15 @@
+/**
+ * @typedef {import('express').Express} Express
+ */
 import logger from '../logger';
 import createError from 'http-errors';
 
 /**
- * @param app
+ * Adiciona handlers de erro ao App
+ * @param {Express} app Express
+ * @returns {void}
  */
-export default function(app) {
+export default function errorSetup(app) {
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
     next(createError(404));
