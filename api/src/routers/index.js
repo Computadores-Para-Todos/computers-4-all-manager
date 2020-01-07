@@ -8,6 +8,7 @@ import statusRouter from './statusRouter';
 import donatorRouter from './donatorRouter';
 import deviceRouter from './deviceRouter';
 import activityRouter from './activityRouter';
+import commentRouter from './commentRouter';
 
 // Router da API
 export const apiRouter = Router();
@@ -19,6 +20,7 @@ apiRouter.use('/statuses', statusRouter);
 apiRouter.use('/donators', donatorRouter);
 apiRouter.use('/devices', deviceRouter);
 apiRouter.use('/activities', activityRouter);
+apiRouter.use('/comments', commentRouter);
 
 /**
  * Configura rotas do app
