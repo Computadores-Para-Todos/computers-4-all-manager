@@ -13,11 +13,11 @@ statusRouter.use(withRole(ROLES.ADMIN));
 statusRouter
   .route('/')
 
-  // Cria status
-  .post(async (req, res) => res.json(await Status.create(req.body)))
-
   // Obtém lista de status
-  .get(async (req, res) => res.json(await Status.findAll()));
+  .get(async (req, res) => res.send(await Status.findAll()))
+
+  // Cria status
+  .post(async (req, res) => res.send(await Status.create(req.body)));
 
 statusRouter
   .route('/:id')
@@ -36,11 +36,11 @@ statusRouter
     const statusUpdated = await Status.update(body, { where: { id } });
     if (statusUpdated[0] === 0)
       return res.status(404).send({ error: 'Status não encontrado' });
-    res.send(statusUpdated);
+    res.send({ updated: true });
   })
   // deleta status
   .delete(async ({ params: { id } }, res) =>
-    res.json(await Status.destroy({ where: { id } }))
+    res.send(await Status.destroy({ where: { id } }).then(deleted => ({ deleted })))
   );
 
 export default statusRouter;

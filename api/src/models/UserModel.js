@@ -1,4 +1,4 @@
-import { Model, Op } from 'sequelize';
+import { Model, Op, STRING, INTEGER, DATEONLY, DATE } from 'sequelize';
 import { encrypt } from '../utils';
 
 /**
@@ -8,7 +8,7 @@ import { encrypt } from '../utils';
  * @augments {Model}
  * @see https://codewithhugo.com/using-es6-classes-for-sequelize-4-models/
  */
-export default class UserModel extends Model {
+export default class User extends Model {
   /**
    * Atualiza a data do último acesso
    * @static
@@ -40,8 +40,7 @@ export default class UserModel extends Model {
   }
 
   // Cria instância do model
-  static init(sequelize, DataTypes) {
-    const { STRING, INTEGER, DATE, DATEONLY } = DataTypes;
+  static init(sequelize) {
     return super.init(
       {
         thumb: STRING,
@@ -86,10 +85,7 @@ export default class UserModel extends Model {
           defaultValue: 'active'
         }
       },
-      {
-        modelName: 'User',
-        sequelize
-      }
+      { sequelize }
     );
   }
 }

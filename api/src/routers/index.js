@@ -1,10 +1,10 @@
 /**
  * @typedef {import('express').Express} Express
  */
-import indexRouter from './indexRouter';
 import userRouter from './userRouter';
 import authRouter from './authRouter';
 import statusRouter from './statusRouter';
+import donatorRouter from './donatorRouter';
 
 /**
  * Configura rotas do app
@@ -12,10 +12,11 @@ import statusRouter from './statusRouter';
  * @returns {void}
  */
 export function setupRouters(app) {
-  app.use('/api', indexRouter);
+  app.get('/api/', (req, res) => res.send({ root: true }));
   app.use('/api/users', authRouter);
   app.use('/api/users', userRouter);
   app.use('/api/statuses', statusRouter);
+  app.use('/api/donators', donatorRouter);
 }
 
-export { indexRouter, userRouter, authRouter, statusRouter };
+export { userRouter, authRouter, statusRouter, donatorRouter };

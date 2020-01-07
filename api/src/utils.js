@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
  * Encripta valor para uso no banco de dados
  * @param {*} value valor a ser encriptado
  * @returns {string} valor encriptado
+ * @todo usar metodo async
  */
 export function encrypt(value) {
   return bcrypt.hashSync(value, 10);
@@ -15,6 +16,7 @@ export function encrypt(value) {
  * @param {string} plain plain value
  * @param {string} hash  hash value
  * @returns {boolean} são iguais
+ * @todo usar metodo async
  */
 export function encryptCompare(plain, hash) {
   return bcrypt.compareSync(plain, hash);
