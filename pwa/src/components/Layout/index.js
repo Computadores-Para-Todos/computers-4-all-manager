@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import Layout from './Layout';
 
@@ -27,8 +28,14 @@ const dummyPage = title => {
  *
  * @returns {React} Página de layout renderizada
  */
-function LayoutContainer({ user, logoutCallback }) {
-  const userName = user.email;
+function LayoutContainer({ user }) {
+  const history = useHistory();
+  const { email: userName } = user;
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    history.push('/authentication');
+  };
 
   const sideMenuItens = [
     { name: 'Início', icon: 'home', path: '', exact: true, component: dummyPage('Início') },
@@ -41,16 +48,14 @@ function LayoutContainer({ user, logoutCallback }) {
 
   const userMenuItens = [{ name: 'Perfil', icon: 'user', path: 'perfil', component: dummyPage('Perfil') }];
 
-  return <Layout userName={userName} logoutCallback={logoutCallback} sideMenuItens={sideMenuItens} userMenuItens={userMenuItens} />;
+  return <Layout userName={userName} logoutCallback={handleLogout} sideMenuItens={sideMenuItens} userMenuItens={userMenuItens} />;
 }
 
 LayoutContainer.propTypes = {
   /** Objeto contendo os dados do usuário
    * (detalhes especificos do que será armazenado ainda não foi definido)
    **/
-  user: PropTypes.object.isRequired,
-  /** Função que será chamada ao apertar o botão de logout */
-  logoutCallback: PropTypes.func.isRequired
+  user: PropTypes.object.isRequired
 };
 
 export default LayoutContainer;
