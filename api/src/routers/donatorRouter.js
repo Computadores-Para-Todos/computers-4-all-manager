@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { withAuth, withRole } from '../middlewares';
+import { withRole } from '../middlewares';
 import { ROLES } from '../settings';
 import { Donator } from '../models';
 
@@ -8,6 +8,7 @@ import { Donator } from '../models';
  */
 const donatorRouter = Router();
 
+// Autorização
 donatorRouter.use(withRole(ROLES.ADMIN));
 
 donatorRouter

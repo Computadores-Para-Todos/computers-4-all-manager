@@ -1,7 +1,7 @@
 // Auth Router
 
 import express from 'express';
-import { withAuth, withRole } from '../middlewares';
+import { withAuth } from '../middlewares';
 import { ROLES } from '../settings';
 import { User } from '../models';
 import { jwtSign, encryptCompare } from '../utils';

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { withAuth, withRole } from '../middlewares';
+import { withRole } from '../middlewares';
 import { ROLES } from '../settings';
 import { User } from '../models';
 
@@ -8,6 +8,7 @@ import { User } from '../models';
  */
 const userRouter = Router();
 
+// Autorização
 userRouter.use(withRole(ROLES.ADMIN));
 
 userRouter
