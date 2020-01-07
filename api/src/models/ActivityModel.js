@@ -16,7 +16,17 @@ export default class Activity extends Model {
       {
         activity: {
           type: ENUM('status', 'user'),
-          allowNull: false
+          allowNull: false,
+          validate: {
+            // Valida se a chave estrangeira da respectiva atividade foi informada
+            validActivity(value) {
+              if (
+                (value === 'status' && !this.StatusId) ||
+                (value === 'user' && !this.UserId)
+              )
+                throw new Error(`${value}Id não foi informado`);
+            }
+          }
         }
       },
       { sequelize, updatedAt: false }
