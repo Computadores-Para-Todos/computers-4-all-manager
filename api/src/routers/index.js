@@ -7,6 +7,7 @@ import authRouter from './authRouter';
 import statusRouter from './statusRouter';
 import donatorRouter from './donatorRouter';
 import deviceRouter from './deviceRouter';
+import activityRouter from './activityRouter';
 
 // Router da API
 export const apiRouter = Router();
@@ -17,6 +18,7 @@ apiRouter.use('/users', userRouter);
 apiRouter.use('/statuses', statusRouter);
 apiRouter.use('/donators', donatorRouter);
 apiRouter.use('/devices', deviceRouter);
+apiRouter.use('/activities', activityRouter);
 
 /**
  * Configura rotas do app
@@ -27,4 +29,11 @@ export function setupRouters(app) {
   app.use('/api', apiRouter);
 }
 
-export { userRouter, authRouter, statusRouter, donatorRouter };
+export {
+  userRouter,
+  authRouter,
+  statusRouter,
+  donatorRouter,
+  deviceRouter,
+  activityRouter
+};
