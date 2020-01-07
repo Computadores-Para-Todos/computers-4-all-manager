@@ -3,6 +3,7 @@ import Sequelize from 'sequelize';
 import User from './UserModel';
 import Status from './StatusModel';
 import Donator from './DonatorModel';
+import Device from './DeviceModel';
 
 const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
@@ -23,12 +24,12 @@ const config = {
 export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
 
 // Inicializa modelos - INSERIR NOVOS MODELOS AQUI
-const models = [User, Status, Donator];
+const models = [User, Status, Donator, Device];
 models.forEach(model => model.init(sequelize));
 // Executa método associate, se existir, para criar relacionamentos
 models
   .filter(model => typeof model.associate === 'function')
-  .forEach(model => model.associate(models));
+  .forEach(model => model.associate());
 
 sequelize.sync();
 
@@ -44,4 +45,4 @@ export function connect() {
 }
 
 // Export Models
-export { User, Status, Donator };
+export { User, Status, Donator, Device };

@@ -28,7 +28,7 @@ userRouter
   .get(async ({ params: { id } }, res) => {
     const user = await User.findOne({ where: { id } });
     if (user === null)
-      return res.status(404).send({ error: 'Usuário não localizado' });
+      return res.status(404).send({ error: 'Usuário não encontrado' });
 
     res.send(user);
   })
@@ -37,7 +37,7 @@ userRouter
   .put(async ({ params: { id }, body }, res) => {
     const usersUpdated = await User.update(body, { where: { id } });
     if (usersUpdated[0] === 0)
-      return res.status(404).send({ error: 'Usuário não localizado' });
+      return res.status(404).send({ error: 'Usuário não encontrado' });
     res.send({ updated: true });
   })
   // deleta usuário

@@ -26,7 +26,7 @@ donatorRouter
   .get(async ({ params: { id } }, res) => {
     const donator = await Donator.findOne({ where: { id } });
     if (donator === null)
-      return res.status(404).json({ error: 'doador não localizado' });
+      return res.status(404).json({ error: 'doador não encontrado' });
 
     res.send(donator);
   })
@@ -35,7 +35,7 @@ donatorRouter
   .put(async ({ params: { id }, body }, res) => {
     const donatorsUpdated = await Donator.update(body, { where: { id } });
     if (donatorsUpdated[0] === 0)
-      return res.status(404).json({ error: 'doador não localizado' });
+      return res.status(404).json({ error: 'doador não encontrado' });
     res.send({ updated: true });
   })
   // deleta doador
