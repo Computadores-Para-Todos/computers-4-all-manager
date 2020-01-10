@@ -12,7 +12,9 @@ import styles from './styles';
  */
 function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
   const location = useLocation();
-  const routesList = useMemo(() => userMenuItens.concat(...sideMenuItens), [sideMenuItens, userMenuItens]);
+  const routesList = useMemo(() => userMenuItens.concat(...sideMenuItens), [sideMenuItens, userMenuItens]).filter(
+    item => item.name !== null
+  );
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const toggleMenuVisibility = () => {
     setIsMenuVisible(oldValue => !oldValue);
@@ -75,11 +77,10 @@ function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
             {sideMenuItens.map(item => (
               <Menu.Item
                 key={item.name}
-                as={Link}
+                as={item.name !== null ? Link : 'span'}
                 to={item.path}
                 name={item.name}
                 active={location.pathname === `/${item.name}`}
-                disabled={item.name === null}
                 onClick={() => setIsMenuVisible(false)}
               >
                 {item.icon && <Icon style={styles.menuIcon} name={item.icon} />}
@@ -100,12 +101,11 @@ function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
         <Menu inverted vertical style={styles.leftMenu}>
           {sideMenuItens.map(item => (
             <Menu.Item
-              as={Link}
+              as={item.name !== null ? Link : 'span'}
               to={item.path}
               key={item.name}
               name={item.name}
               active={location.pathname === `/${item.name}`}
-              disabled={item.name === null}
               onClick={() => setIsMenuVisible(false)}
             >
               {item.icon && <Icon style={styles.menuIcon} name={item.icon} />}
