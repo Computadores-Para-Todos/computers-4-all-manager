@@ -39,3 +39,6 @@ pwa/build/
 
 ## Yarn should not be used
 yarn.lock
+
+# Node Tests
+api/__tests__/database.sqlite

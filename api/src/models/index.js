@@ -14,24 +14,28 @@ const {
   DATABASE,
   DB_HOST,
   DB_TIMEZONE,
-  DB_DIALECT,
-  DB_LOGGING
+  NODE_ENV
 } = process.env;
 const config = {
-  dialect: DB_DIALECT || 'mysql',
+  dialect: 'mysql',
   dialectOptions: {
     timezone: DB_TIMEZONE
   },
   host: DB_HOST,
   operatorsAliases: 0,
-  storage: './__tests__/database.sqlite',
-  logging: false,
+
   define: {
     timestamp: true,
     underscored: true,
     underscoredAll: true
   }
 };
+
+if (NODE_ENV === 'test') {
+  config.logging = false;
+  config.storage = './__tests__/database.sqlite';
+  config.dialect = 'sqlite';
+}
 
 export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
 
@@ -41,7 +45,7 @@ models.forEach(model => model.init(sequelize));
 // Executa método associate, se existir, para criar relacionamentos
 models
   .filter(model => typeof model.associate === 'function')
-  .forEach(model => model.associate(sequelize.models));
+  .forEach(model => model.associate());
 
 sequelize.sync();
 

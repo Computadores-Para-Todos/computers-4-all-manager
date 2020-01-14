@@ -8,7 +8,8 @@
     "start": "node dist/index.js",
     "lint": "eslint .",
     "prettier": "prettier-check \"src/**/*.js\"",
-    "database": "docker-compose up"
+    "database": "docker-compose up",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -34,15 +35,19 @@
     "@babel/core": "^7.7.7",
     "@babel/node": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
+    "@types/jest": "^24.0.25",
     "eslint": "^5.12.0",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-jsdoc": "^18.3.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "3.0.1",
     "husky": "^3.1.0",
+    "jest": "^24.9.0",
     "nodemon": "^2.0.1",
     "prettier": "^1.19.1",
-    "prettier-check": "^2.0.0"
+    "prettier-check": "^2.0.0",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
   },
   "husky": {
     "hooks": {
