@@ -57,27 +57,29 @@ donationRouter
             .json({ error: 'O dispositivo deve ser especificado' });
         }
         await Promise.all(
-          devices.map(device =>
-            Device.create(
-              {
-                donationId: donation.id,
-                donatorId: donation.donatorId,
-                status: {
-                  title: 'Submetido ao sistema pelo doador',
-                  use: 'device'
+          devices
+            .filter(device => !device.id)
+            .map(device =>
+              Device.create(
+                {
+                  donationId: donation.id,
+                  donatorId: donation.donatorId,
+                  status: {
+                    title: 'Submetido ao sistema pelo doador',
+                    use: 'device'
+                  },
+                  ...device
                 },
-                ...device
-              },
-              {
-                include: [
-                  {
-                    model: Status,
-                    as: 'status'
-                  }
-                ]
-              }
+                {
+                  include: [
+                    {
+                      model: Status,
+                      as: 'status'
+                    }
+                  ]
+                }
+              )
             )
-          )
         );
       } else {
         if (!description) {
