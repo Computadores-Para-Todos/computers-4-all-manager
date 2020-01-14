@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { sendEmail } from '../util/mail';
 import { Donator, Donation, Device, Status } from '../models';
 
 const donationRouter = Router();
@@ -41,7 +42,8 @@ donationRouter
     const { donationId } = req.params;
 
     const donation = await Donation.findOne({
-      where: { id: donationId }
+      where: { id: donationId },
+      include: [{ model: Donator, as: 'donator' }]
     });
     if (!donation) {
       return res.status(400).json({ error: 'Identificador inválido' });
@@ -128,6 +130,13 @@ donationRouter
           }
         )
       ]);
+
+      sendEmail(
+        [reqDonator.email || donation.donator.email, process.env.ADMIN_EMAIL],
+        'Confirmação de doação',
+        `<p>Olá ${reqDonator.name || donation.donator.name},</p>
+         <p>seu formulário de doação foi recebido com sucesso</p>`
+      );
     }
 
     const {
