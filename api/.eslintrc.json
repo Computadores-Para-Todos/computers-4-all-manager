@@ -1,6 +1,12 @@
 {
-  "extends": ["prettier", "plugin:jsdoc/recommended"],
-  "plugins": ["prettier", "jsdoc"],
+  "extends": [
+    "prettier",
+    "plugin:jsdoc/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "jsdoc"
+  ],
   "env": {
     "amd": true,
     "jest": true,
@@ -17,9 +23,11 @@
         "endOfLine": "auto"
       }
     ],
-    "valid-jsdoc": 2,
+    "valid-jsdoc": [
+      "error"
+    ],
     "valid-typeof": [
-      2,
+      "error",
       {
         "requireStringLiterals": false
       }

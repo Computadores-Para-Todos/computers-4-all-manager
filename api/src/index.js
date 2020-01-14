@@ -3,9 +3,10 @@
 /**
  * Module dependencies.
  */
-const app = require('../app');
+import 'dotenv/config';
 const debug = require('debug')('computers-4-all:server');
-const http = require('http');
+import app from './app.js';
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
@@ -27,8 +28,8 @@ server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
- *
- * @param val
+ * @param {*} val Port
+ * @returns {boolean|number} Port
  */
 function normalizePort(val) {
   const port = parseInt(val, 10);

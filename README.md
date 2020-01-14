@@ -26,24 +26,30 @@ git checkout -b 12-criar-form-usuario
 
 ### Setup da API
 1 - Instalar pacotes da API
-```
+```bash
 cd api
 npm install
 ```
 2 - Criar uma cópia o arquivo `.env.sample` para `.env`
-```
+```bash
 cp .env-sample .env 
 ```
-3 - Criar database local e informar os parâmetros de conexão no arquivo `.env` 
+3 - Criar database local e informar os parâmetros de conexão no arquivo `.env` (caso tenha Docker/Compose instalado, pode usar e configurar o banco de desenvolvimento no arquivo `api/docker-compose.yml` - `npm run database`)
 4 - Rodar a API
-```
+```bash
 nvm use
+npm run dev
+```
+
+5 - 🎉🎉🎉
+
+Neste momento seu terminal deve dizer que a API está rodando em [http://localhost:3001/](http://localhost:3001), e informando sucesso ou falha em conexão com o banco de dados.
+
+Para gerar um build de produção e executá-lo, basta rodar:
+```bash
+npm run build
 npm start
 ```
-
-🎉🎉🎉
-
-Neste momento seu terminal deve dizer que a API está rodando em [http://localhost:3001/](http://localhost:3000), e informando sucesso ou falha em conexão com o banco de dados.
 
 ### Setup do frontend
 1 - Instalar pacotes do front

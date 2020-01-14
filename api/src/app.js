@@ -1,10 +1,10 @@
-const express = require('express');
-require('express-async-errors');
-const dotenv = require('dotenv').config();
-const rollbar = require('./logger');
-const routes = require('./src/setup/routes');
-const expressConfig = require('./src/setup/expressConfig');
-const error = require('./src/setup/error');
+import express from 'express';
+import 'express-async-errors';
+import rollbar from './logger';
+import { setupRouters } from './routers';
+import expressConfig from './setup/expressConfig';
+import error from './setup/error';
+import { connect } from './models';
 
 const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
 
@@ -27,15 +27,15 @@ const app = express();
 
 // Setup
 expressConfig(app);
-routes(app);
+setupRouters(app);
 error(app);
 
 // Starting database
-require('./src/models');
+connect();
 
 // const port = process.env.PORT || 3000;
 // app.listen(port, () => {
 //   console.log(`Server running on port ${port}`);
 // });
 
-module.exports = app;
+export default app;

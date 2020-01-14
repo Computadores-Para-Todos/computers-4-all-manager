@@ -1,14 +1,23 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const path = require('path');
-const cors = require('cors');
+/**
+ * @typedef {import('express').Express} Express
+ */
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import path from 'path';
+import cors from 'cors';
 
-module.exports = function(app) {
+/**
+ * Configurações gerais do app
+ * @exports
+ * @param {Express} app Express
+ * @returns {void}
+ */
+export default function appConfig(app) {
   app.use(logger('dev'));
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
-};
+}

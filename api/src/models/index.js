@@ -1,9 +1,12 @@
-'use strict';
+import Sequelize from 'sequelize';
+// models
+import User from './UserModel';
+import Status from './StatusModel';
+import Donator from './DonatorModel';
+import Device from './DeviceModel';
+import Activity from './ActivityModel';
+import Comment from './CommentModel';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
 const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
 
 const config = {
@@ -20,26 +23,28 @@ const config = {
   }
 };
 
-const db = {};
-const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
+export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
 
-sequelize
-  .authenticate()
-  .then(() => console.log('Connection has been established successfully.'))
-  .catch(err => console.log('Unable to connect to the database:', err));
-
-fs.readdirSync(__dirname)
-  .filter(file => {
-    return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
-  })
-  .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
-  });
+// Inicializa modelos - INSERIR NOVOS MODELOS AQUI
+const models = [User, Status, Donator, Device, Activity, Comment];
+models.forEach(model => model.init(sequelize));
+// Executa método associate, se existir, para criar relacionamentos
+models
+  .filter(model => typeof model.associate === 'function')
+  .forEach(model => model.associate());
 
 sequelize.sync();
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+/**
+ * Connect to the database
+ * @returns {Promise} connection
+ */
+export function connect() {
+  return sequelize
+    .authenticate()
+    .then(() => console.log('Connection has been established successfully.'))
+    .catch(err => console.log('Unable to connect to the database:', err));
+}
 
-module.exports = db;
+// Export Models
+export { User, Status, Donator, Device, Activity, Comment };

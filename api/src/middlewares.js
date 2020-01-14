@@ -2,14 +2,15 @@
  *  Middlewares express
  */
 
-const { jwtVerify } = require('./utils');
+import { jwtVerify } from './utils';
+import { User } from './models';
 const { JWT_SECRET = 'c4all' } = process.env;
 
 /**
  * Usado para rotas que precisam do usuário autenticado.
  * @returns {Function} middleware
  */
-function withAuth() {
+export function withAuth() {
   return function(req, res, next) {
     let token = req.headers['x-access-token'] || req.headers['authorization'] || '';
 
@@ -31,18 +32,14 @@ function withAuth() {
  * @param {string|[string]} roles uma ou mais roles
  * @returns {[Function]} middleware
  */
-function withRole(roles) {
-  if (typeof roles === 'number') roles = [roles];
+export function withRole(roles) {
+  if (typeof roles === 'string') roles = [roles];
   return [
     withAuth(),
-    function({ auth: { role } }, res, next) {
-      if (roles.includes(role)) return next();
-      res.status(401).send({ error: 'Unauthorized' });
+    function({ auth: { role, id } }, res, next) {
+      if (!roles.includes(role)) res.status(401).send({ error: 'Unauthorized' });
+      else next();
+      User.updateLastAccess(id);
     }
   ];
 }
-
-module.exports = {
-  withAuth,
-  withRole
-};
