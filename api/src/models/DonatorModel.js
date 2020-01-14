@@ -19,11 +19,15 @@ export default class Donator extends Model {
         },
         email: {
           type: STRING,
-          allowNull: false,
           unique: true,
           validate: {
             isEmail: true
           }
+        },
+        document: {
+          type: STRING,
+          allowNull: false,
+          unique: true
         },
         phone: STRING,
         notify_by: ENUM('email', 'whatsapp', 'phone'),
