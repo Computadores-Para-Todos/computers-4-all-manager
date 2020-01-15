@@ -6,4 +6,5 @@ import UserList from './UserList';
 import data from '../../../.storybook/mocks/users.json';
 
 storiesOf('UserList', module)
-  .add('default', () => <UserList data={data} onEdit={action('onEdit')} onDelete={action('onDelete')} />);
+  .add('Default', () => <UserList data={data} onEdit={action('onEdit')} onDelete={action('onDelete')} />)
+  .add('Loading', () => <UserList loading data={data} onEdit={action('onEdit')} onDelete={action('onDelete')} />);
