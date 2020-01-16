@@ -1,4 +1,4 @@
-import { Model, Op, STRING, INTEGER, DATEONLY, DATE } from 'sequelize';
+import { Model, Op, STRING, INTEGER, DATEONLY, DATE, ENUM } from 'sequelize';
 import { encrypt } from '../utils';
 
 /**
@@ -46,7 +46,7 @@ export default class User extends Model {
         thumb: STRING,
         name: STRING,
         document: STRING,
-        genre: INTEGER,
+        gender: ENUM('male', 'female'),
         birthday: DATEONLY,
         phone: STRING,
         email: {
