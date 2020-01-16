@@ -1,12 +1,32 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Header, Message, Transition } from 'semantic-ui-react';
 import { useParams, useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 import moment from 'moment';
 
 import styles from './styles';
 
 import UserForm from './UserForm';
 import api from '../../services/api';
+
+const formSchema = Yup.object().shape({
+  name: Yup.string().required('O nome é obrigatório'),
+  document: Yup.string().required('O documento é obrigatório'),
+  gender: Yup.string()
+    .oneOf(['male', 'female'])
+    .required('O gênero é obrigatório'),
+  birthday: Yup.string().required('A data de nascimento é obrigatória'),
+  phone: Yup.string().required('O número de telefone é obrigatório'),
+  email: Yup.string()
+    .email('Insira um e-mail válido')
+    .required('O e-mail é obrigatório'),
+  role: Yup.string()
+    .oneOf(['voluntary', 'admin'])
+    .required('A função é obrigatória'),
+  status: Yup.string()
+    .oneOf(['active', 'inactive'])
+    .required('O status é obrigatório')
+});
 
 /**
  *  Conteiner do formulário de edição de usuários, responsável por carregar
@@ -101,7 +121,14 @@ function UserFormContainer() {
           <Message floating positive header="Salvo com sucesso" content="Você será redirecionado em breve" />
         </Transition>
       )}
-      <UserForm addingUser={id === 'add'} data={data} loading={loading} error={error} onSubmit={handleSubmit} />
+      <UserForm
+        addingUser={id === 'add'}
+        data={data}
+        loading={loading}
+        error={error}
+        onSubmit={handleSubmit}
+        validationSchema={formSchema}
+      />
     </>
   );
 }

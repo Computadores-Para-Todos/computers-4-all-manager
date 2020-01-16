@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
-import { Segment, Header, Divider, Form, Message, Button } from 'semantic-ui-react';
+import { Segment, Header, Divider, Form, Message, Button, Label } from 'semantic-ui-react';
 import 'moment/locale/pt-br';
 import { DateInput } from 'semantic-ui-calendar-react';
 import InputMask from 'react-input-mask';
@@ -14,7 +14,7 @@ import styles from './styles';
  * @returns {React} Formulário renderizado
  */
 function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema }) {
-  const { values, handleSubmit, setFieldValue, setFieldTouched } = useFormik({
+  const { values, errors, handleSubmit, setFieldValue, setFieldTouched } = useFormik({
     enableReinitialize: true,
     initialValues: data,
     validate: () => {},
@@ -51,6 +51,14 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
           value={values.name}
           onChange={handleChange}
           onBlur={handleBlur}
+          error={
+            errors.name
+              ? {
+                  content: errors.name,
+                  pointing: 'above'
+                }
+              : undefined
+          }
           required
         />
         <Form.Group widths="equal">
@@ -63,9 +71,17 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={
+              errors.email
+                ? {
+                    content: errors.email,
+                    pointing: 'above'
+                  }
+                : undefined
+            }
             required
           />
-          <Form.Field required>
+          <Form.Field required error={errors.phone}>
             <label>Telefone</label>
             <InputMask
               mask="DD-DDDDXXDDD?"
@@ -77,6 +93,11 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
               onChange={e => handleChange(e, e.target)}
               onBlur={handleBlur}
             />
+            {errors.phone && (
+              <Label prompt pointing>
+                {errors.phone}
+              </Label>
+            )}
           </Form.Field>
         </Form.Group>
         <Form.Input
@@ -87,10 +108,18 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
           value={values.document}
           onChange={handleChange}
           onBlur={handleBlur}
+          error={
+            errors.document
+              ? {
+                  content: errors.document,
+                  pointing: 'above'
+                }
+              : undefined
+          }
           required
         />
         <Form.Group widths="equal">
-          <Form.Field required>
+          <Form.Field required error={errors.birthday}>
             <label>Data de nascimento</label>
             <DateInput
               name="birthday"
@@ -103,6 +132,11 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            {errors.birthday && (
+              <Label prompt pointing>
+                {errors.birthday}
+              </Label>
+            )}
           </Form.Field>
           <Form.Select
             fluid
@@ -116,6 +150,14 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
             ]}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={
+              errors.gender
+                ? {
+                    content: errors.gender,
+                    pointing: 'above'
+                  }
+                : undefined
+            }
             required
           />
         </Form.Group>
@@ -132,6 +174,14 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
             ]}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={
+              errors.role
+                ? {
+                    content: errors.role,
+                    pointing: 'above'
+                  }
+                : undefined
+            }
             required
           />
           <Form.Select
@@ -146,6 +196,14 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
             ]}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={
+              errors.status
+                ? {
+                    content: errors.status,
+                    pointing: 'above'
+                  }
+                : undefined
+            }
             required
           />
         </Form.Group>
