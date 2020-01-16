@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import Layout from './Layout';
+import UserList from '../UserList';
 
 const dummyPage = title => {
   const DummyPage = () => (
@@ -37,16 +38,15 @@ function LayoutContainer({ user }) {
     history.push('/authentication');
   };
 
-  const sideMenuItens = [
-    { name: 'Início', icon: 'home', path: '', exact: true, component: dummyPage('Início') },
-    { name: 'Atividades', icon: 'list', path: 'atividades', component: dummyPage('Atividades') },
-    { name: 'Doadores', icon: 'handshake', path: 'doadores', component: dummyPage('Doadores') },
-    { name: 'Dispositivos', icon: 'desktop', path: 'dispositivos', component: dummyPage('Dispositivos') },
-    { name: null, icon: null, path: '', component: null },
-    { name: 'Usuários', icon: 'users', path: 'usuarios', component: dummyPage('Usuários') }
-  ];
+  const sideMenuItens = [{ name: 'Início', icon: 'home', path: '/', exact: true, component: dummyPage('Início') }, { name: null }];
+  const userMenuItens = [{ name: 'Perfil', icon: 'user', path: '/perfil', component: dummyPage('Perfil') }];
 
-  const userMenuItens = [{ name: 'Perfil', icon: 'user', path: 'perfil', component: dummyPage('Perfil') }];
+  switch (user.role) {
+    case 'admin':
+      sideMenuItens.push({ name: 'Usuários', icon: 'users', path: '/users', exact: true, component: UserList });
+      break;
+    default:
+  }
 
   return <Layout userName={userName} logoutCallback={handleLogout} sideMenuItens={sideMenuItens} userMenuItens={userMenuItens} />;
 }

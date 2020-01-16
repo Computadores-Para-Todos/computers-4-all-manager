@@ -91,7 +91,7 @@ function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
           <Sidebar.Pusher as={Container} style={styles.content} fluid>
             <Switch>
               {routesList.map(item => (
-                <Route key={item.path} path={`/${item.path}`} exact={item.exact || false} component={item.component} />
+                <Route key={item.path} path={item.path} exact={item.exact || false} component={item.component} />
               ))}
             </Switch>
           </Sidebar.Pusher>
@@ -116,7 +116,7 @@ function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
         <Container style={styles.content} fluid>
           <Switch>
             {routesList.map(item => (
-              <Route key={item.path} path={`/${item.path}`} exact component={item.component} />
+              <Route key={item.path} path={item.path} exact component={item.component} />
             ))}
           </Switch>
         </Container>
