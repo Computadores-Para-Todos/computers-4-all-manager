@@ -46,6 +46,7 @@ export default {
   },
   content: {
     flex: '1',
-    padding: '1em'
+    padding: '1em',
+    backgroundColor: '#EEEEEE'
   }
 };
