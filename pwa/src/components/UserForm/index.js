@@ -12,6 +12,9 @@ import api from '../../services/api';
 const formSchema = Yup.object().shape({
   name: Yup.string().required('O nome é obrigatório'),
   document: Yup.string().required('O documento é obrigatório'),
+  password: Yup.string()
+    .min(6, 'A senha deve ter no mínimo 6 caracteres')
+    .when('addingUser', (addingUser, schema) => (addingUser ? schema.required('A senha é obrigatória') : schema)),
   gender: Yup.string()
     .oneOf(['male', 'female'])
     .required('O gênero é obrigatório'),
@@ -74,14 +77,11 @@ function UserFormContainer() {
 
   const handleSubmit = useCallback(
     async values => {
+      console.log(values);
       setLoading(true);
       try {
         if (id === 'add') {
-          await api.post(
-            '/users',
-            { ...values, birthday: moment(values.birthday, 'DD/MM/YYYY').format(), password: '123456' },
-            requisitionSettings
-          );
+          await api.post('/users', { ...values, birthday: moment(values.birthday, 'DD/MM/YYYY').format() }, requisitionSettings);
         } else {
           await api.put(`/users/${id}`, { ...values, birthday: moment(values.birthday, 'DD/MM/YYYY').format() }, requisitionSettings);
         }
@@ -123,7 +123,7 @@ function UserFormContainer() {
       )}
       <UserForm
         addingUser={id === 'add'}
-        data={data}
+        data={{ addingUser: id === 'add', ...data }}
         loading={loading}
         error={error}
         onSubmit={handleSubmit}
