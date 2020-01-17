@@ -1,7 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Container, Menu, Header, Icon, Dropdown, Divider, Responsive, Sidebar } from 'semantic-ui-react';
+
+import DashboardRoutes from '../../routes/DashboardRoutes';
 
 import styles from './styles';
 
@@ -12,9 +14,6 @@ import styles from './styles';
  */
 function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
   const location = useLocation();
-  const routesList = useMemo(() => userMenuItens.concat(...sideMenuItens), [sideMenuItens, userMenuItens]).filter(
-    item => item.name !== null
-  );
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const toggleMenuVisibility = () => {
     setIsMenuVisible(oldValue => !oldValue);
@@ -89,11 +88,7 @@ function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
             ))}
           </Sidebar>
           <Sidebar.Pusher as={Container} style={styles.content} fluid>
-            <Switch>
-              {routesList.map(item => (
-                <Route key={item.path} path={`/${item.path}`} exact={item.exact || false} component={item.component} />
-              ))}
-            </Switch>
+            <DashboardRoutes />
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Responsive>
@@ -114,11 +109,7 @@ function Layout({ logoutCallback, userName, sideMenuItens, userMenuItens }) {
           ))}
         </Menu>
         <Container style={styles.content} fluid>
-          <Switch>
-            {routesList.map(item => (
-              <Route key={item.path} path={`/${item.path}`} exact component={item.component} />
-            ))}
-          </Switch>
+          <DashboardRoutes />
         </Container>
       </Responsive>
     </div>
@@ -131,11 +122,7 @@ const menuItem = PropTypes.shape({
   /** Icone exibido junto ao nome */
   icon: PropTypes.string,
   /** Rota na qual o a pagina será exibida */
-  path: PropTypes.string.isRequired,
-  /** Rota deve ser exata */
-  exact: PropTypes.bool,
-  /** Componente a ser renderizado */
-  component: PropTypes.elementType
+  path: PropTypes.string
 });
 
 Layout.propTypes = {
