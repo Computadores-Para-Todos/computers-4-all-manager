@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import DeviceCard from './DeviceCard';
+import DeviceCard from '.';
 
 export const dummyDevice = {
   id: 1,
