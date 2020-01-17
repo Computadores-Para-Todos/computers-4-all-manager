@@ -1,4 +1,4 @@
-import { Model, STRING, INTEGER, ENUM } from 'sequelize';
+import { Model, STRING, INTEGER, ENUM, DATE } from 'sequelize';
 import { Devices, Donator, Status } from '.';
 
 export default class Donation extends Model {
@@ -9,7 +9,8 @@ export default class Donation extends Model {
         quantity: INTEGER,
         description: STRING,
         collect_type: ENUM('fetch', 'give'),
-        collect_time: STRING
+        collect_time: STRING,
+        collectedAt: DATE
       },
       { sequelize }
     );

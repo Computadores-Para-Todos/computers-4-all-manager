@@ -1,4 +1,4 @@
-import { Model, Op, STRING, ENUM } from 'sequelize';
+import { Model, Op, STRING, ENUM, DATE, INTEGER } from 'sequelize';
 import { encrypt } from '../utils';
 import { User, Status, Donation, Donator } from '.';
 
@@ -21,7 +21,9 @@ export default class Device extends Model {
         type: {
           type: ENUM('computer', 'display', 'printer'),
           allowNull: false
-        }
+        },
+        serial: INTEGER,
+        collectedAt: DATE
       },
       { sequelize }
     );

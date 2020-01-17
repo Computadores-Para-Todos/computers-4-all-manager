@@ -1,4 +1,4 @@
-import { Model, STRING, ENUM } from 'sequelize';
+import { Model, STRING, ENUM, INTEGER, BOOLEAN } from 'sequelize';
 
 /**
  * Model de usuário
@@ -21,6 +21,10 @@ export default class Status extends Model {
             }
           }
         },
+        displayOrder: {
+          type: INTEGER
+        },
+        showOnGrid: BOOLEAN,
         use: {
           type: ENUM('device', 'donation'),
           allowNull: false
