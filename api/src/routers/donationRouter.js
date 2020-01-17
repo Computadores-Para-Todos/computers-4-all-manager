@@ -12,9 +12,17 @@ donationRouter
   .post(async (req, res) => {
     const { donator: reqDonator } = req.body;
     if (reqDonator) {
-      const { document } = reqDonator;
+      const { document, notify, notify_by, email, phone } = reqDonator;
       if (!document)
         return res.status(400).json({ error: 'Documento não pode ser nulo' });
+      if (notify) {
+        if (!notify_by)
+          return res.status(400).json({ error: 'Selecione um meio de notificação' });
+        if (notify_by === 'email' && !email)
+          return res.status(400).json({ error: 'Insira um email' });
+        if ((notify_by === 'phone' || notify_by === 'whatsapp') && !phone)
+          return res.status(400).json({ error: 'Insira um numero de telefone' });
+      }
 
       let donator = await Donator.findOne({ where: { document } });
 
