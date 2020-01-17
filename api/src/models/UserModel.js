@@ -1,4 +1,4 @@
-import { Model, Op, STRING, INTEGER, DATEONLY, DATE, ENUM } from 'sequelize';
+import { Model, Op, STRING, VIRTUAL, DATEONLY, DATE, ENUM } from 'sequelize';
 import { encrypt } from '../utils';
 
 /**
@@ -41,7 +41,7 @@ export default class User extends Model {
 
   // Cria instância do model
   static init(sequelize) {
-    return super.init(
+    super.init(
       {
         thumb: STRING,
         name: STRING,
@@ -57,24 +57,8 @@ export default class User extends Model {
             isEmail: true
           }
         },
-        password: {
-          type: STRING,
-          allowNull: false,
-          defaultValue: '',
-          validate: {
-            notEmpty: {
-              msg: 'Senha obrigatória'
-            },
-            len: {
-              args: [6, 300],
-              msg: 'A senha deve conter no mínimo 6 caracteres'
-            }
-          },
-          set(val) {
-            if (val && val.length >= 6) this.setDataValue('password', encrypt(val));
-            else this.setDataValue('a');
-          }
-        },
+        password: VIRTUAL,
+        password_hash: STRING,
         lastaccess: DATE,
         role: {
           type: STRING,
@@ -87,5 +71,13 @@ export default class User extends Model {
       },
       { sequelize }
     );
+
+    this.addHook('beforeSave', user => {
+      if (user.password) {
+        user.password_hash = encrypt(user.password);
+      }
+    });
+
+    return this;
   }
 }
