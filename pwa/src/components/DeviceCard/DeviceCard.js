@@ -1,12 +1,14 @@
 import React from 'react';
 import PropType from 'prop-types';
-import { Segment, Label, Container, Icon, Header } from 'semantic-ui-react';
+import { Segment, Label, Icon, Header } from 'semantic-ui-react';
 import { parseISO, differenceInCalendarDays } from 'date-fns';
 
-import styles from './styles';
+// import styles from './styles';
 
 /**
+ * Card do dispositivo
  *
+ * @returns {React} componente renderizado
  */
 function DeviceCard({ data, onSelect }) {
   return (
@@ -30,7 +32,11 @@ DeviceCard.propTypes = {
     id: PropType.number.isRequired,
     title: PropType.string.isRequired,
     createdAt: PropType.string.isRequired,
-    collectedAt: PropType.string.isRequired
+    collectedAt: PropType.string.isRequired,
+    comments: PropType.array.isRequired,
+    donator: PropType.shape({
+      name: PropType.string.isRequired
+    })
   }),
   /** Callback chamada ao clicar no dispositivo */
   onSelect: PropType.func.isRequired
