@@ -39,9 +39,6 @@ function UserForm({ data, loading, error, addingUser, onSubmit, validationSchema
         validationSchema={validationSchema}
       >
         {({ values, touched, errors, handleSubmit, handleChange, handleBlur, setFieldValue, setFieldTouched }) => {
-          console.log(values);
-          console.log(touched);
-          console.log(errors);
           return (
             <Form loading={loading} onSubmit={handleSubmit} noValidate={true}>
               <Form.Input
