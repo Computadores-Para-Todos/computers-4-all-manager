@@ -20,7 +20,7 @@ function DeviceCard({ data, onSelect }) {
       <Label size="small">
         <Icon name="comment" /> {data.comments.length}
       </Label>
-      <Label size="small">Conosco à {differenceInCalendarDays(new Date(), parseISO(data.collectedAt))} dias</Label>
+      {data.collectedAt && <Label size="small">Conosco à {differenceInCalendarDays(new Date(), parseISO(data.collectedAt))} dias</Label>}
       <Label size="small">Doação iniciada à {differenceInCalendarDays(new Date(), parseISO(data.createdAt))} dias</Label>
     </Segment>
   );
@@ -32,7 +32,7 @@ DeviceCard.propTypes = {
     id: PropType.number.isRequired,
     title: PropType.string.isRequired,
     createdAt: PropType.string.isRequired,
-    collectedAt: PropType.string.isRequired,
+    collectedAt: PropType.string,
     comments: PropType.array.isRequired,
     donator: PropType.shape({
       name: PropType.string.isRequired
