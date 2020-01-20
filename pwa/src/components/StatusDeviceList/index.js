@@ -17,7 +17,6 @@ function StatusDeviceListContainer() {
   const loadStatusData = useCallback(async () => {
     if (!user) return;
     setLoading(true);
-    console.log('Loading list');
     try {
       const { data: statusData } = await api.get(`/statuses/list`, {
         headers: {
@@ -44,7 +43,11 @@ function StatusDeviceListContainer() {
     loadStatusData();
   }, [user, loadStatusData]);
 
-  return <StatusDeviceList data={data} loading={loading} error={error} />;
+  const handleSelect = () => {
+    // TODO - Falta implementar view de detalhes de dispositivo
+  };
+
+  return <StatusDeviceList data={data} loading={loading} error={error} onSelect={handleSelect} />;
 }
 
 export default StatusDeviceListContainer;
