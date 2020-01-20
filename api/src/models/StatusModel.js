@@ -1,4 +1,5 @@
 import { Model, STRING, ENUM, INTEGER, BOOLEAN } from 'sequelize';
+import { Device } from '.';
 
 /**
  * Model de usuário
@@ -32,5 +33,19 @@ export default class Status extends Model {
       },
       { sequelize }
     );
+  }
+
+  /**
+   * Cria relacionamentos
+   * @static
+   * @memberof Device
+   * @returns {void}
+   */
+  static associate() {
+    // User relation
+    this.hasMany(Device, {
+      as: 'devices',
+      onDelete: 'cascade'
+    });
   }
 }

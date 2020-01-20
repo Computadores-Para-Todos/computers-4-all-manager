@@ -1,6 +1,6 @@
 import { Model, Op, STRING, ENUM, DATE, INTEGER } from 'sequelize';
 import { encrypt } from '../utils';
-import { User, Status, Donation, Donator } from '.';
+import { User, Status, Donation, Donator, Comment } from '.';
 
 /**
  * Model de usuário
@@ -60,5 +60,7 @@ export default class Device extends Model {
       as: 'donator',
       onDelete: 'cascade'
     });
+
+    this.hasMany(Comment, { as: 'comments' });
   }
 }
