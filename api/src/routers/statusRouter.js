@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { withRole } from '../middlewares';
 import { ROLES } from '../settings';
-import { Status } from '../models';
+import { Status, Device, Donator, Comment } from '../models';
 
 /**
  * Router de usuário
@@ -19,6 +19,38 @@ statusRouter
 
   // Cria status
   .post(async (req, res) => res.send(await Status.create(req.body)));
+
+statusRouter
+  .route('/list')
+
+  // Lista os estatus e os dispositivos associados
+  .get(async (req, res) => {
+    const statusList = await Status.findAll({
+      where: {
+        showOnGrid: true
+      },
+      order: [['displayOrder', 'ASC']],
+      include: [
+        {
+          model: Device,
+          as: 'devices',
+          include: [
+            {
+              model: Donator,
+              as: 'donator',
+              attributes: ['name']
+            },
+            {
+              model: Comment,
+              as: 'comments'
+            }
+          ]
+        }
+      ]
+    });
+
+    return res.json(statusList);
+  });
 
 statusRouter
   .route('/:id')
