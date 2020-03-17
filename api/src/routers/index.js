@@ -10,6 +10,7 @@ import deviceRouter from './deviceRouter';
 import activityRouter from './activityRouter';
 import commentRouter from './commentRouter';
 import donationRouter from './donationRouter';
+import dashboardRouter from './dashboardRouter';
 
 // Router da API
 export const apiRouter = Router();
@@ -23,6 +24,7 @@ apiRouter.use('/devices', deviceRouter);
 apiRouter.use('/activities', activityRouter);
 apiRouter.use('/comments', commentRouter);
 apiRouter.use('/donations', donationRouter);
+apiRouter.use('/dashboard', dashboardRouter);
 
 /**
  * Configura rotas do app
@@ -40,5 +42,6 @@ export {
   donatorRouter,
   deviceRouter,
   activityRouter,
-  donationRouter
+  donationRouter,
+  dashboardRouter
 };
