@@ -24,7 +24,7 @@ authRouter.post(
 
 authRouter.post('/login', async ({ body: { email = '', password = '' } }, res) => {
   const user = await User.findOne({ where: { email: email } });
-  if (!user || !encryptCompare(password, user.password))
+  if (!user || !encryptCompare(password, user.password_hash))
     return res.status(401).send({ error: 'Login inválido' });
 
   const token = await jwtSign(user.toJSON(), JWT_SECRET);
