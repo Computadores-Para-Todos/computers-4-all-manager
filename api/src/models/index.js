@@ -6,9 +6,16 @@ import Donator from './DonatorModel';
 import Device from './DeviceModel';
 import Activity from './ActivityModel';
 import Comment from './CommentModel';
+import Donation from './DonationModel';
 
-const { DB_USERNAME, DB_PASSWORD, DATABASE, DB_HOST, DB_TIMEZONE } = process.env;
-
+const {
+  DB_USERNAME,
+  DB_PASSWORD,
+  DATABASE,
+  DB_HOST,
+  DB_TIMEZONE,
+  NODE_ENV
+} = process.env;
 const config = {
   dialect: 'mysql',
   dialectOptions: {
@@ -16,6 +23,7 @@ const config = {
   },
   host: DB_HOST,
   operatorsAliases: 0,
+
   define: {
     timestamp: true,
     underscored: true,
@@ -23,10 +31,16 @@ const config = {
   }
 };
 
+if (NODE_ENV === 'test') {
+  config.logging = false;
+  config.storage = './__tests__/database.sqlite';
+  config.dialect = 'sqlite';
+}
+
 export const sequelize = new Sequelize(DATABASE, DB_USERNAME, DB_PASSWORD, config);
 
 // Inicializa modelos - INSERIR NOVOS MODELOS AQUI
-const models = [User, Status, Donator, Device, Activity, Comment];
+const models = [User, Status, Donator, Device, Activity, Comment, Donation];
 models.forEach(model => model.init(sequelize));
 // Executa método associate, se existir, para criar relacionamentos
 models
@@ -47,4 +61,4 @@ export function connect() {
 }
 
 // Export Models
-export { User, Status, Donator, Device, Activity, Comment };
+export { User, Status, Donator, Device, Activity, Comment, Donation };

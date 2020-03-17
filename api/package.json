@@ -8,7 +8,8 @@
     "start": "node dist/index.js",
     "lint": "eslint .",
     "prettier": "prettier-check \"src/**/*.js\"",
-    "database": "docker-compose up"
+    "database": "docker-compose up",
+    "test": "jest --detectOpenHandles"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,6 +20,7 @@
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "express-async-errors": "^3.1.1",
+    "html-to-text": "^5.1.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
@@ -26,6 +28,7 @@
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.0.2",
+    "nodemailer": "^6.4.2",
     "rollbar": "^2.14.4",
     "sequelize": "^5.21.3"
   },
@@ -34,15 +37,19 @@
     "@babel/core": "^7.7.7",
     "@babel/node": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
+    "@types/jest": "^24.0.25",
     "eslint": "^5.12.0",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-jsdoc": "^18.3.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "3.0.1",
     "husky": "^3.1.0",
+    "jest": "^24.9.0",
     "nodemon": "^2.0.1",
     "prettier": "^1.19.1",
-    "prettier-check": "^2.0.0"
+    "prettier-check": "^2.0.0",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
   },
   "husky": {
     "hooks": {

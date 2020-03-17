@@ -6,10 +6,28 @@ import expressConfig from './setup/expressConfig';
 import error from './setup/error';
 import { connect } from './models';
 
-const { ADMIN_EMAIL, DB_HOST, DB_USERNAME, DATABASE } = process.env;
+const {
+  ADMIN_EMAIL,
+  DB_HOST,
+  DB_USERNAME,
+  DATABASE,
+  MAIL_HOST,
+  MAIL_PORT,
+  MAIL_USER,
+  MAIL_PASS
+} = process.env;
 
 // Validar arquivo .env
-if (!ADMIN_EMAIL || !DB_HOST || !DB_USERNAME || !DATABASE) {
+if (
+  !ADMIN_EMAIL ||
+  !DB_HOST ||
+  !DB_USERNAME ||
+  !DATABASE ||
+  !MAIL_HOST ||
+  !MAIL_PORT ||
+  !MAIL_USER ||
+  !MAIL_PASS
+) {
   throw new Error(
     'O arquivo .env não foi carregado corretamente. Leia o README para mais informações.'
   );

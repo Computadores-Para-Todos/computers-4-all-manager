@@ -8,7 +8,21 @@ import { Donator } from '../models';
  */
 const donatorRouter = Router();
 
-// Autorização
+donatorRouter
+  .route('/')
+
+  // Obtém os dados do doados com documento
+  .get(async (req, res, next) => {
+    const { document } = req.query;
+
+    if (document) {
+      const donator = await Donator.findOne({ where: { document } });
+      if (donator) return res.json(donator);
+      return res.status(404).json({ error: 'Doador não encontrado' });
+    }
+    return next();
+  });
+
 donatorRouter.use(withRole(ROLES.ADMIN));
 
 donatorRouter
