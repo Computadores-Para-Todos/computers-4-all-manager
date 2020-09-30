@@ -12,7 +12,7 @@ const authRouter = express.Router();
 authRouter.post(
   '/signup',
   async ({ body: { email = '', password = '', ...body } }, res) => {
-    const user = await User.create({ ...body, email, password, role: ROLES.USER });
+    const user = await User.create({ ...body, email, password, role: 'admin' });
     const token = await jwtSign(user.toJSON(), JWT_SECRET);
 
     res.send({

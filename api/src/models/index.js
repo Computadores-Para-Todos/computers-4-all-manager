@@ -23,7 +23,7 @@ const config = {
   },
   host: DB_HOST,
   operatorsAliases: 0,
-
+  logging:false,
   define: {
     timestamp: true,
     underscored: true,
@@ -59,6 +59,7 @@ export function connect() {
     .then(() => console.log('Connection has been established successfully.'))
     .catch(err => console.log('Unable to connect to the database:', err));
 }
+connect();
 
 // Export Models
 export { User, Status, Donator, Device, Activity, Comment, Donation };

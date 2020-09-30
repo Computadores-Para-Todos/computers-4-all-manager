@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 
 import api from '../../services/api';
@@ -24,7 +24,7 @@ const signSchema = Yup.object().shape({
  */
 function AuthenticationContainer() {
   const [error, setError] = useState(null);
-  const history = useHistory();
+  const router = useRouter();
 
   const saveUser = (token, user) => {
     localStorage.setItem(
@@ -36,7 +36,7 @@ function AuthenticationContainer() {
         signed: true
       })
     );
-    history.push('/');
+    router.push('/');
   };
 
   const handleSubmit = async values => {
@@ -70,7 +70,7 @@ function AuthenticationContainer() {
         }
       } catch (err) {
         if (err.response) {
-          setError(err.response.statusText);
+          setError(err.response.data.error);
         } else {
           setError('Falhas ao tentar se comunicar com o servidor.');
         }
