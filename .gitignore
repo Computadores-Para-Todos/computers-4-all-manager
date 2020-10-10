@@ -42,3 +42,5 @@ yarn.lock
 
 # Node Tests
 api/__tests__/database.sqlite
+temp_auto_push.bat
+temp_interactive_push.bat
