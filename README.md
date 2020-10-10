@@ -1,24 +1,49 @@
 # Computers for all - manager
 
-Este repositório contem dois projetos do [Computadores para todos](https://www.computadoresparatodos.com.br/); a API e o sistema de gestão.
+O [Computadores para todos](https://www.computadoresparatodos.com.br/) é um projeto social que recebe doação de computadores usados, os renova, e doa para jóvens de comuinidades menos favorecidas. Atualmente o projeto acontece apenas em Juiz de Fora, mas, através deste sistema, poderá expandir para outras cidades.
+ 
+# Este repositório
 
-Estamos nos primeiros passos, então utilize as issues para comentar, sugerir e perguntar.
+Este repositório contém dois projetos; a API (backend node) e o sistema de gestão (frontend react).
 
-Para acompanhar as issues e o que precisa ser feito consulte [Versão de desenvolvimento pronta para crescer](https://github.com/Computadores-Para-Todos/computers-4-all-manager/projects/1).
+# Como colaborar
 
-# Para começar
+O primeiro é assistir (mesmo que por alto) o video abaixo para entender o projeto, entender o sistema e saber como serão geridas as tarefas. Clique para abrir no Youtube.
 
-1 - Clonar o projeto
+[![Video do Youtube](https://img.youtube.com/vi/xdzaJtn-r3M/0.jpg)](https://www.youtube.com/watch?v=xdzaJtn-r3M)
+
+## Vantagens de participar
+
+## Como participar
+
+- Veja as tarefas atuais (coluna "To do"), pelos boards do [projeto](https://github.com/Computadores-Para-Todos/computers-4-all-manager/projects/)
+- Leia as tarefas em "To do" e veja se pode pegar alguma delas
+- Comente na issue, ou até fale diretamente conosco pelo grupo do whatsapp, para entender melhor o que precisa ser feito, como fazer, conhecer os detalhes
+- Se estiver tudo ok, marque a issue para você e mova para "Doing"
+- Crie um branch a partir do `dev`, de acordo com o ID e nome da issue, exemplo: `30-preparar-ambiente-producao`
+- Trabalhe no seu branch e interaja sempre que achar necessário
+- Ao final, de push no seu branch para o repositório e abra um [Pull Request](https://github.com/Computadores-Para-Todos/computers-4-all-manager/pulls) do seu branch para `dev`
+- Mova o card da sua issue no projeto para "Validating" e aguarde os comentários e observações
+- Se tudo estiver certo seu PR será aceito, e seu código será mergeado para o branch principal `dev` 
+- Sucesso, você mandou bem demais 🎉
+
+# Como começar
+
+Você precisará rodar a API e o frontend em dois terminais diferentes, ao mesmo tempo, para ver o projeto funcionar. Opcionalmente você pode executar o Storybook, que é onde todos os componentes estão organizados.
+
+Segue um passo a passo para rodar o projeto localmente:
+
+1 - Clone o projeto
 ``` 
 git clone https://github.com/Computadores-Para-Todos/computers-4-all-manager.git
 ```
 
-2 - Instalar NVM (ou garantir que esteja usando o node versão 11.x)
+2 - Instale o NVM (ou garanta que esteja usando o node versão 11.x)
 ``` 
 https://github.com/nvm-sh/nvm
 ```
 
-3 - Ir para o branch dev, e criar um novo branch para a issue que está. Exemplo:
+3 - Vá para o branch `dev`, e criae um novo branch para a issue que está. Exemplo:
 ```
 git checkout dev
 git checkout -b 12-criar-form-usuario
@@ -34,16 +59,16 @@ npm install
 ```bash
 cp .env-sample .env 
 ```
+
 3 - Criar database local e informar os parâmetros de conexão no arquivo `.env` (caso tenha Docker/Compose instalado, pode usar e configurar o banco de desenvolvimento no arquivo `api/docker-compose.yml` - `npm run database`)
+
 4 - Rodar a API
 ```bash
 nvm use
 npm run dev
 ```
 
-5 - 🎉🎉🎉
-
-Neste momento seu terminal deve dizer que a API está rodando em [http://localhost:3001/](http://localhost:3001), e informando sucesso ou falha em conexão com o banco de dados.
+5 - 🎉🎉🎉 - Neste momento seu terminal deve dizer que a API está rodando em [http://localhost:3001/](http://localhost:3001), e informando sucesso ou falha em conexão com o banco de dados.
 
 Para gerar um build de produção e executá-lo, basta rodar:
 ```bash
@@ -66,22 +91,22 @@ cp .env-sample .env
 nvm use
 npm start
 ```
-4 - Rodar o Storybook
+4 - 🎉🎉🎉 - Seu terminal irá iniciar o servidor local do frontend react e abrirá [http://localhost:3000/](http://localhost:3000) em seu navedor.
+
+### Executar o Storybook
+
+1 - Abra um novo terminar na mesma pasta do PWA e execute:
 ```
 npm run storybook
 ```
 
-🎉🎉🎉
+2 - 🎉🎉🎉 - Seu terminal irá iniciar o servidor local do storybook e abrirá [http://localhost:9009/](http://localhost:9009) em seu navedor. 
 
-Agora seu terminal irá iniciar o servidor local e abrir duas abas no navegador: 
-- Uma com a aplicação em React (porta 3000 por padrão)
-- Outra com o Storybook (porta 9009 por padrão)
-
-# Mais informações e ferramentas
+# Mais detalhes técnicos e ferramentas
 
 ## Lint
 
-O projeto tem um padrão de códigos que é imposto pelo ESLint, é preciso ativar o ESLint e o Pretier na sua IDE para que ela te avise quando algo estiver faltando ou fora do padrão. Todos alertas devem ser resolvidos, porque o Husky não irá deixar subir código fora do padrão.
+O projeto tem um padrão de códigos que é imposto pelo ESLint, é preciso ativar o ESLint e o Prettier na sua IDE para que ela te avise quando algo estiver faltando ou fora do padrão. Todos alertas devem ser resolvidos, porque o Husky não irá deixar subir código fora do padrão.
 
 Estas são as regras em uso:
 
