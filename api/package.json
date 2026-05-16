@@ -28,7 +28,7 @@
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.0.2",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.16",
     "rollbar": "^2.14.4",
     "sequelize": "^5.21.3"
   },
